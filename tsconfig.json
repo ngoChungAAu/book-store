@@ -18,14 +18,5 @@
     "jsx": "react-jsx",
     "baseUrl": "./src"
   },
-  "include": ["src", "internals/startingTemplate/**/*"],
-  "ts-node": {
-    "compilerOptions": {
-      "esModuleInterop": true,
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "noEmit": true,
-      "allowSyntheticDefaultImports": true
-    }
-  }
+  "include": ["src"]
 }

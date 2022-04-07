@@ -10,10 +10,13 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
-import { GlobalStyle } from '../styles/global-styles';
+import { GlobalStyle } from 'styles/global-styles';
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import DefaultTheme from 'theme/defaultTheme';
 
 import { HomePage } from './pages/HomePage/Loadable';
-import { NotFoundPage } from './pages/NotFoundPage/Loadable';
+import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
 
 export function App() {
@@ -28,11 +31,14 @@ export function App() {
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
 
-      <Switch>
-        <Route exact path={process.env.PUBLIC_URL + '/'} component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <GlobalStyle />
+      <ThemeProvider theme={DefaultTheme}>
+        <CssBaseline />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+        <GlobalStyle />
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

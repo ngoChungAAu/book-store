@@ -1,151 +1,219 @@
-<img width="914" alt="React Boilerplate Meets CRA" src="https://user-images.githubusercontent.com/3495307/80274591-2d5daa00-86e4-11ea-8fba-404f1cdba87e.png" align="center">
-<br />
+# Tech Stack
 
-<div align="center" >Crafted for <strong>highly scalable</strong> & <strong>performant</strong> and <strong>easily maintainable</strong> React.js applications <br /> 
-with a focus on  
-<strong>best DX</strong> and <strong>best practices</strong>.
-</div>
+## Core
 
-<br />
+- React
+- React Router
+- Redux
+- Redux Toolkit
+- Reselect
+- Redux-Saga
+- Styled Components
+- Typescript
+- React-i18next
 
-<div align="center">
-  <a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/actions?query=workflow%3Abuild">
-    <img src="https://github.com/react-boilerplate/react-boilerplate-cra-template/workflows/build/badge.svg" alt="Build Status" />
-  </a>
-  <a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/actions?query=workflow%3Atests">
-    <img src="https://github.com/react-boilerplate/react-boilerplate-cra-template/workflows/test/badge.svg" alt="Tests Status" />
-  </a>
-  <a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/actions?query=workflow%release">
-    <img src="https://github.com/react-boilerplate/react-boilerplate-cra-template/workflows/release/badge.svg" alt="Release Status" />
-  </a>
-</div>
+## Unit Testing
 
-<div align="center">
-  <a href="https://coveralls.io/github/react-boilerplate/react-boilerplate-cra-template">
-    <img src="https://coveralls.io/repos/github/react-boilerplate/react-boilerplate-cra-template/badge.svg?branch=master" alt="Coverage" />
-  </a>
-  <a href="https://opencollective.com/react-boilerplate">
-    <img src="https://opencollective.com/react-boilerplate/backers/badge.svg" alt="Backers" />
-  </a>
-  <a href="https://opencollective.com/react-boilerplate/">
-    <img src="https://opencollective.com/react-boilerplate/sponsors/badge.svg" alt="Sponsors" />
-  </a>
-</div>
+- Jest
+- react-testing-library
 
-<br />
+## Linting
 
----
+- ESLint
+- Prettier
+- Stylelint
 
-The official [Create React App](https://github.com/facebook/create-react-app) template of the `discontinued` [React Boilerplate](https://github.com/react-boilerplate/react-boilerplate)
+# Code/Folder Structure
 
-Start your `create-react-app` projects in seconds with the best, industry-standard tools and practices made ready for you.
+## src
 
-**📚 Documentation:** [Gitbook](https://cansahin.gitbook.io/react-boilerplate-cra-template/)
+- **src/app/components**: contains reusable components for website
+- **src/app/pages**: Follow the folder-by-feature pattern
 
-**🎨 Check the example app:** [Demonstrating the features](https://react-boilerplate.github.io/react-boilerplate-cra-template/)
+### src/locales
 
-**📂 Browse in VS Code:** [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/react-boilerplate/react-boilerplate-cra-template)
+### src/store
 
-**📦 Package:** [npm](https://www.npmjs.com/package/cra-template-rb)
+### src/styles
 
-![version](https://img.shields.io/npm/v/cra-template-rb)
-![version](https://img.shields.io/npm/dm/cra-template-rb)
+### src/types
 
----
+### src/utils
 
-## Install & Start
+## public
 
-⚠️ Using [Yarn Package Manager](https://yarnpkg.com) is recommended over `npm`.
+## internals
 
-Create React App with the template
+This section you won't be bothering with much. We ship some extra functionalities to help with your web app and here it lies. It contains the code for:
 
-```shell
-yarn create react-app --template cra-template-rb my-app
+- internals/extractMessages: Utils to extract messages into JSON syntax.
+- internals/generators: Create new components and redux-toolkit slices using CLI.
+- internals/testing: Testing the internal features like generators. You can customize your generators and still test them if they are working
+
+# CLI & Scaffolding
+
+## Development
+
 ```
-
-Start and check our example app, if you want
-
-```shell
-cd my-app
 yarn start
 ```
 
-Remove the example app to start your project!
+Sets up the development environment and starts a server, as well as hot module reloading.
 
-```shell
+## Cleaning
+
+```
 yarn cleanAndSetup
 ```
 
----
+Removes the example app, replacing it with the smallest amount of boilerplate code necessary to start writing your app! Also, it makes some essential changes to your setup to give you a clean and working start.
 
-## Features
+## Generators
 
-> This project is **NOT** a framework, UI component library or a design system. The only purpose of this template is to assist you starting your CRA app with a solid tool stack and development patterns. It's 100% customizable. After you start your journey and once you understand the concepts offered here you should personalize your code accordingly instead of being tied to the starter project.
->
-> You can add or remove literally anything and use whichever library or tools you prefer.
+```
+yarn generate
+```
 
-<dl>
+Allows you to auto-generate boilerplate code for common parts of your application, specifically `components`, and `redux-toolkit` slices
 
-  <dt>Predictable state management</dt>
-  <dd>Unidirectional data flow allows for change logging and time travel debugging.</dd>
+- `yarn generate component`: For generating a component:
+  - **What should it be called?** Enter the component name
+  - **Where do you want it to be created?** Choose a folder that you want to your component is located in
+  - **Do you want to wrap your component in React.memo?** Default is `No`
+  - **Do you want to use styled-components?** Default is `Yes`
+  - **Do you want i18n translations (i.e. will this component use text)?** Default is `No`
+  - **Do you want to load the component asynchronously?** Default is `No`
+  - **Do you want to have tests?** Default is `No`
+- `yarn generate slice`: For generating a slice:
+  - **What should it be called (automatically adds ...Slice postfix)**: The slice name
+  - **Where do you want it to be created?**: Choose a folder that you want to your slice is located in
+  - **Do you want sagas for asynchronous flows? (e.g. fetching data)**: Default is `Yes`, enable `redux-saga` for managing side-effects such as dispatching actions asynchronously or accessing browser data
 
-  <dt>Instant feedback</dt>
-  <dd>Enjoy the best DX (Developer eXperience) and code your app at the speed of thought! Your saved changes to the CSS and JS are reflected instantaneously without refreshing the page. Preserve application state even when you update something in the underlying code!</dd>
+## Production
 
-  <dt>Next generation CSS</dt>
-  <dd>Write composable CSS that's co-located with your components for complete modularity. Unique generated class names keep the specificity low while eliminating style clashes. Ship only the styles that are on the page for the best performance.</dd>
+```
+yarn start:prod
+```
 
-  <dt>Industry-standard routing</dt>
-  <dd>It's natural to want to add pages (e.g. `/about`) to your application, and routing makes this possible.</dd>
+- Builds your app (see yarn run build)
+- Serves the build folder locally
 
-  <dt>Industry-standard i18n internationalization support</dt>
-  <dd>Scalable apps need to support multiple languages, easily add and support multiple languages.</dd>
+The app is built for optimal performance; assets are minified and served gzip-ed.
 
-  <dt>Typescript</dt>
-  <dd>Typescript is the key to scalability. Build self-documented code, easy-to-debug code and create maintainable large applications and codebases with a highly productive development experience.</dd>
+## Unit testing
 
-  <dt>Quick scaffolding</dt>
-  <dd>Create components, containers, routes, selectors and sagas - and their tests - right from the CLI!</dd>
+```
+yarn test
+```
 
-  <dt>Static code analysis</dt>
-  <dd>Focus on writing new features without worrying about formatting or code quality. With the right editor setup, your code will automatically be formatted and linted as you work.</dd>
+Unit tests specified in the `**/__tests__/*.ts` files throughout the application are run.
 
-  <dt>SEO</dt>
-  <dd>We support SEO (document head tags management) for search engines that support indexing of JavaScript content. (eg. Google)</dd>
-</dl>
+## Linting
 
-But wait... there's more!
+```
+yarn lint
+```
 
-- _The best test setup:_ Automatically guarantee code quality and non-breaking
-  changes. (Seen a react app with 100% test coverage before?)
-- _The fastest fonts:_ Say goodbye to vacant text.
-- _Stay fast_: Profile your app's performance from the comfort of your command
-  line!
+Lints your Typescript and your CSS.
 
-<sub><i>Keywords: Create React App, React Boilerplate, Custom Template, Typescript, React.js, Redux, Hot Reloading, ESNext, Babel, react-router, `styled-components`, redux-saga, FontFaceObserver</i></sub>
+```
+yarn lint:fix
+```
 
-## Contributors
+Lints your code and tries to fix any errors it finds.
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/Can-Sahin"><img src="https://avatars2.githubusercontent.com/u/33245689?s=80" width="80px;" alt=""/><br /><sub><b>Can Sahin</b></sub></a><br /><a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/commits?author=Can-Sahin" title="Code">💻</a> <a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/commits?author=Can-Sahin" title="Documentation">📖</a> <a href="#ideas-Can-Sahin" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/pulls?q=is%3Apr+reviewed-by%3ACan-Sahin" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/commits?author=Can-Sahin" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://github.com/receptiryaki"><img src="https://avatars0.githubusercontent.com/u/3495307?s=80" width="80px;" alt=""/><br /><sub><b>Recep Tiryaki</b></sub></a><br /><a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/commits?author=receptiryaki" title="Code">💻</a> <a href="#ideas-receptiryaki" title="Ideas, Planning, & Feedback">🤔</a> <a href="#design-receptiryaki" title="Design">🎨</a></td>
-    <td align="center"><a href="https://github.com/mogsdad"><img src="https://avatars3.githubusercontent.com/u/1707731?s=80" width="80px;" alt=""/><br /><sub><b>David Bingham</b></sub></a><br /><a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/commits?author=mogsdad" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/lourensdev"><img src="https://avatars.githubusercontent.com/u/5746141?v=4?s=80" width="80px;" alt=""/><br /><sub><b>Lourens de Villiers</b></sub></a><br /><a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/commits?author=lourensdev" title="Documentation">📖</a></td>
-  </tr>
-</table>
+## Extracting translation JSON Files
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+```
+yarn extract-messages
+```
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+## Typescript
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+```
+yarn checkTs
+```
 
-## License
+Checks for TypeScript errors.
 
-This project is licensed under the MIT license, Copyright (c) 2019 Maximilian Stoiber.
-For more information see `LICENSE.md`.
+# Building Blocks
+
+In this section, we will explain the building blocks of the boilerplate in detail.
+First we have to look at what is happening when react starts its life with `index.tsx` file.
+
+## src/index.tsx:
+
+It is one of the most important files of the boilerplate. It contains all the global setup to make sure your app runs smoothly. Let's break its contents down:
+
+- `react-app-polyfill` is imported to enable compatibility with many browsers and cool stuff like generator functions, Promises, etc.
+- A Redux store is instantiated.
+- `ReactDOM.render()` not only renders the root React component, called `<App />`, of your application, but it renders it with `<Provider />`.
+- Hot module replacement via `Webpack HMR` makes the i18n translations hot re-loadable.
+- i18next internationalization support setup.
+- `<Provider />` connects your app with the Redux store.
+  Again, src/index.tsx handles all the bootstrapping and setup of the features we are using in the boilerplate. Now, let's review a summary of the building blocks.
+
+## Redux
+
+The Redux store is the heart of your application. Check out src/store/configureStore.ts to see how we have configured the store.
+
+The createStore() factory creates the Redux store and accepts three parameters.
+
+1. Root reducer: A master reducer combining all your reducers.
+2. Initial state: The initial state of your app as determined by your reducers.
+3. Middleware/enhancers: Middlewares are third party libraries which intercept each Redux action dispatched to the Redux store and then... do stuff. For example, if you install the redux-logger middleware, it will listen to all the actions being dispatched to the store and print the previous and next state in the browser console. It's helpful to track what happens in your app.
+
+In our application, we are using a single middleware.
+
+`redux-saga`: Used for managing side-effects such as dispatching actions asynchronously or accessing browser data.
+
+## Reselect
+
+Reselect is a library used for slicing your Redux state and providing only the relevant sub-tree to a React component. It has three key features:
+
+1. Computational power.
+2. Memoization.
+3. Composability.
+
+Imagine an application that shows a list of users. Its Redux state tree stores an array of usernames with signatures:
+
+```
+{ id: number, username: string, gender: string, age: number }
+```
+
+Let's see how the three features of reselect help.
+
+- **Computation**: While performing a search operation, reselect will filter the original array and return only matching usernames. Redux state does not have to store a separate array of filtered usernames.
+- **Memoization**: A selector will not compute a new result unless one of its arguments change. That means, if you are repeating the same search once again, reselect will not filter the array over and over. It will just return the previously computed and, subsequently, cached result. Reselect compares the old and the new arguments and then decides whether to compute again or return the cached result.
+- **Composability**: You can combine multiple selectors. For example, one selector can filter usernames according to a search key, and another selector can filter the already filtered array according to gender. One more selector can further filter according to age. You combine these selectors by using `createSelector()`.
+
+## Redux-Saga
+
+If your application interacts with some back-end API for data, we recommend using redux-saga for side-effect management
+
+Imagine that your application is fetching data in JSON format from a back-end. For every API call, ideally, you should define at least three kinds of action creators:
+
+1. `API_REQUEST`: Upon dispatching this, your application should show a spinner to let the user know that something's happening.
+2. `API_SUCCESS`: Upon dispatching this, your application should show the data to the user.
+3. `API_FAILURE`: Upon dispatching this, your application should show an error message to the user.
+
+And this is only for **one** API call. In a real-world scenario, one page of your application could be making tens of API calls. How do we manage all of them effectively? It essentially boils down to controlling the flow of your application. What if there was a background process that handled multiple actions simultaneously and communicated with the Redux store and React components at the same time? Here is where `redux-saga` enters the picture.
+
+For a mental model, consider a saga like a separate thread in your application that's solely responsible for side-effects. Then `redux-saga` is a Redux middleware, which means this thread can be started, paused, and canceled from the main application with standard Redux actions. It has access to the full Redux application state, and it can dispatch Redux actions as well.
+
+## Linting
+
+This boilerplate includes a complete static code analysis setup. It's composed of ESLint, stylelint, and Prettier.
+
+The boilerplate provides a `pre-commit` git hook to analyze and fix linting errors automatically before committing your code. If you'd like to disable it or modify its behavior, take a look at the `lint-staged` section in `package.json`.
+
+# Building
+
+```
+yarn build
+```
+
+Preps your app for deployment (does not run tests). Optimizes and minifies all files, piping them to the `build` folder.
+
+Upload the contents of `build` to your web server to
+see your work live!

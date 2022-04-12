@@ -3,7 +3,7 @@
  * OneColumnLayout
  *
  */
-import { Box, Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import Header from 'app/components/Header';
 import * as React from 'react';
 

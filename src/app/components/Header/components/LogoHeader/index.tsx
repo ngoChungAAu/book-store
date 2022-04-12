@@ -13,7 +13,7 @@ export default function LogoHeader() {
           component="h1"
           sx={{ fontSize: '40px', fontWeight: 'bold', lineHeight: '48px' }}
         >
-          TAM AN
+          TÂM AN
         </Typography>
       </Link>
     </>

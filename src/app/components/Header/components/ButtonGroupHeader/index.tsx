@@ -1,10 +1,4 @@
-import { Box, IconButton, Link } from '@mui/material';
-import NotificationsSharpIcon from '@mui/icons-material/NotificationsSharp';
-import UserMenu from '../UserMenu';
-import { isEmpty } from 'lodash';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Box } from '@mui/material';
 import ButtonCustom from 'app/components/ButtonCustom';
 
 export default function ButtonGroupHeader() {
@@ -31,7 +25,7 @@ export default function ButtonGroupHeader() {
           fontWeight: 700,
         }}
       >
-        Login
+        Đăng nhập
       </ButtonCustom>
     </Box>
   );

@@ -1,4 +1,4 @@
-import { styled, Theme } from '@mui/system';
+import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import { ButtonProps } from '@mui/material';
 import iconLoading from './assets/iconLoading.svg';

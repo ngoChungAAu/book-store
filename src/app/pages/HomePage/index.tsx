@@ -10,8 +10,7 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>HomePage</title>
-        <meta name="description" content="A Boilerplate application homepage" />
+        <title>Trang chủ</title>
       </Helmet>
       <OneColumnLayout>
         <Box sx={{ width: '100%' }}>

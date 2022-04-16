@@ -7,19 +7,19 @@ export default function List() {
   return (
     <ListWrapper>
       <Typography component="h2">Sách mới</Typography>
-      <Grid container spacing={6}>
-        <Grid item xs={6} sm={4} lg={3}>
-          <Item />
-        </Grid>
-        <Grid item xs={6} sm={4} lg={3}>
-          <Item />
-        </Grid>
-        <Grid item xs={6} sm={4} lg={3}>
-          <Item />
-        </Grid>
-        <Grid item xs={6} sm={4} lg={3}>
-          <Item />
-        </Grid>
+      <Grid container spacing={8}>
+        {[0, 1, 2, 3].map((e, i) => (
+          <Grid
+            key={i}
+            item
+            xs={6}
+            sm={4}
+            lg={3}
+            sx={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <Item />
+          </Grid>
+        ))}
       </Grid>
     </ListWrapper>
   );

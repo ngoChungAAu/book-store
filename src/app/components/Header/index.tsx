@@ -19,7 +19,12 @@ export default function Header() {
           alignItems: 'center',
         }}
       >
-        <Grid container alignItems="center" justifyContent="space-between">
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ height: '100%', borderBottom: '2px solid #28CE7E' }}
+        >
           <LogoHeader />
           <HeaderMenu />
           <ButtonGroupHeader />

@@ -15,26 +15,31 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import DefaultTheme from 'theme/defaultTheme';
 
-import { HomePage } from './pages/HomePage/Loadable';
-import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
+import { NotFoundPage } from './components/NotFoundPage/Loadable';
+import { HomePage } from './pages/HomePage/Loadable';
+import { RegisterPage } from 'app/pages/RegisterPage/Loadable';
+import { LoginPage } from './pages/LoginPage/Loadable';
+import { ListPage } from './pages/ListPage/Loadable';
+import { DetailPage } from './pages/DetailPage/Loadable';
 
 export function App() {
   const { i18n } = useTranslation();
   return (
     <BrowserRouter>
       <Helmet
-        titleTemplate="%s - React Boilerplate"
-        defaultTitle="React Boilerplate"
+        titleTemplate="%s"
         htmlAttributes={{ lang: i18n.language }}
-      >
-        <meta name="description" content="A React Boilerplate application" />
-      </Helmet>
+      ></Helmet>
 
       <ThemeProvider theme={DefaultTheme}>
         <CssBaseline />
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/list" component={ListPage} />
+          <Route exact path="/detail" component={DetailPage} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

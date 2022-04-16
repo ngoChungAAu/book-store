@@ -2,11 +2,14 @@ import { Box } from '@mui/material';
 import { styled } from '@mui/system';
 import Sach1 from './images/sach2.png';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function Item() {
   const price = 1738973987;
+  const history = useHistory();
+  const handleToDo = () => history.push('/detail');
   return (
-    <ItemWrapper>
+    <ItemWrapper onClick={handleToDo}>
       <Box className="image">
         <img src={Sach1} alt="" />
       </Box>

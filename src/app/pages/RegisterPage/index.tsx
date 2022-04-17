@@ -62,7 +62,10 @@ export function RegisterPage() {
     phone: yup
       .string()
       .required('Không thể bỏ trống!')
-      .matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, 'Sai định dạng SĐT!'),
+      .matches(
+        /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/,
+        'Sai định dạng SĐT!',
+      ),
     address: yup.string().required('Không thể bỏ trống!'),
   });
 

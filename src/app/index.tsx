@@ -18,6 +18,7 @@ import DefaultTheme from 'theme/defaultTheme';
 import { useTranslation } from 'react-i18next';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { HomePage } from './pages/HomePage/Loadable';
+import { UserProfilePage } from 'app/pages/UserProfilePage/Loadable';
 import { RegisterPage } from 'app/pages/RegisterPage/Loadable';
 import { LoginPage } from './pages/LoginPage/Loadable';
 import { ListPage } from './pages/ListPage/Loadable';
@@ -38,6 +39,7 @@ export function App() {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/profile" component={UserProfilePage} />
           <Route exact path="/list" component={ListPage} />
           <Route exact path="/detail" component={DetailPage} />
           <Route component={NotFoundPage} />

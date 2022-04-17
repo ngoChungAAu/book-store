@@ -1,17 +1,11 @@
 import { Box, IconButton, Menu } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ReactComponent as WalletInventory } from '../../assets/WalletInventory.svg';
 import BackgroundMenu from '../../assets/BackgroundMenu.svg';
-import IngameInventory from '../../assets/IngameInventory.svg';
-import BalanceInGame from '../../assets/BalanceInGame.svg';
 import UserProfile from '../../assets/UserProfile.svg';
-import Staking from '../../assets/Staking.svg';
-import Vesting from '../../assets/Vesting.svg';
-import ChangePassword from '../../assets/ChangePassword.svg';
 import Logout from '../../assets/Logout.svg';
-import { MenuUserItemStyle } from './style';
 import { useHistory } from 'react-router-dom';
+import { styled } from '@mui/system';
 
 export default function UserMenu() {
   const history = useHistory();
@@ -30,8 +24,6 @@ export default function UserMenu() {
 
   const handleLogout = () => {};
 
-  const handleChangePassword = () => {};
-
   return (
     <>
       <IconButton
@@ -41,6 +33,7 @@ export default function UserMenu() {
           backgroundImage: `url(${BackgroundMenu})`,
           height: '32px',
           width: '32px',
+          cursor: 'pointer',
         }}
       />
       <Menu
@@ -49,8 +42,8 @@ export default function UserMenu() {
         onClose={handleClose}
         PaperProps={{
           sx: {
-            mt: '32px',
-            width: '256px',
+            mt: '10px',
+            width: '220px',
             borderRadius: '16px 0px 16px 16px',
             backgroundColor: theme => theme.palette.white.main,
             '& ul': {
@@ -64,45 +57,9 @@ export default function UserMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuUserItemStyle
-          onClick={() => history.push('/tabs/wallet-inventory')}
-        >
-          <WalletInventory />
-          <Box>Wallet Inventory</Box>
-        </MenuUserItemStyle>
-
-        <MenuUserItemStyle
-          onClick={() => history.push('/tabs/in-game-inventory')}
-        >
-          <img src={IngameInventory} alt="Ingame Inventory" />
-          <Box>In Game Inventory</Box>
-        </MenuUserItemStyle>
-
-        <MenuUserItemStyle
-          onClick={() => history.push('/tabs/balance-in-game')}
-        >
-          <img src={BalanceInGame} alt="Balance In Game" />
-          <Box>Balance In Game</Box>
-        </MenuUserItemStyle>
-
-        <MenuUserItemStyle onClick={() => history.push('/tabs/profile')}>
+        <MenuUserItemStyle onClick={() => history.push('/profile')}>
           <img src={UserProfile} alt="User Profile" />
           <Box>User profile</Box>
-        </MenuUserItemStyle>
-
-        <MenuUserItemStyle>
-          <img src={Staking} alt="Staking" />
-          <Box>Staking</Box>
-        </MenuUserItemStyle>
-
-        <MenuUserItemStyle onClick={() => history.push('/vesting')}>
-          <img src={Vesting} alt="Vesting" />
-          <Box>Vesting</Box>
-        </MenuUserItemStyle>
-
-        <MenuUserItemStyle onClick={handleChangePassword}>
-          <img src={ChangePassword} alt="Change password" />
-          <Box>Change Password</Box>
         </MenuUserItemStyle>
 
         <MenuUserItemStyle onClick={handleLogout}>
@@ -113,3 +70,26 @@ export default function UserMenu() {
     </>
   );
 }
+
+const MenuUserStyle = styled(Menu)(({ theme }) => ({
+  zIndex: 0,
+}));
+
+const MenuUserItemStyle = styled('li')(({ theme }) => ({
+  display: 'flex',
+  gap: '8px',
+  fontSize: '14px',
+  lineHeight: '24px',
+  fontWeight: 400,
+  color: '#000',
+  padding: '0px',
+  marginBottom: '28px',
+
+  '&:hover': {
+    color: theme.palette.primary.main,
+    backgroundColor: 'unset',
+    cursor: 'pointer',
+  },
+
+  '& > img': { width: '24px', height: '24px' },
+}));

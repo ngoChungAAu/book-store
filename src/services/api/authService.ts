@@ -1,4 +1,4 @@
-import apiClient from 'services/config/apiService';
+import apiClient from 'services/api/apiService';
 import queryString from 'query-string';
 
 export const authService = {

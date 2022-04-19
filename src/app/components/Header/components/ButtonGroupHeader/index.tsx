@@ -8,6 +8,7 @@ export default function ButtonGroupHeader() {
   const history = useHistory();
   const handleLogin = () => history.push('/login');
   const handleRegister = () => history.push('/register');
+  const handleCart = () => history.push('/cart');
   return (
     <Box
       sx={{
@@ -19,7 +20,7 @@ export default function ButtonGroupHeader() {
         fontWeight: 700,
       }}
     >
-      <IconButton>
+      <IconButton onClick={handleCart}>
         <Badge badgeContent={1} color="primary">
           <ShoppingCartIcon sx={{ color: '#000' }} />
         </Badge>

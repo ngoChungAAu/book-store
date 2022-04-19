@@ -1,6 +1,5 @@
 import { Box, IconButton, Menu } from '@mui/material';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import BackgroundMenu from '../../assets/BackgroundMenu.svg';
 import UserProfile from '../../assets/UserProfile.svg';
 import Logout from '../../assets/Logout.svg';
@@ -70,10 +69,6 @@ export default function UserMenu() {
     </>
   );
 }
-
-const MenuUserStyle = styled(Menu)(({ theme }) => ({
-  zIndex: 0,
-}));
 
 const MenuUserItemStyle = styled('li')(({ theme }) => ({
   display: 'flex',

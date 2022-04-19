@@ -23,6 +23,8 @@ import { RegisterPage } from 'app/pages/RegisterPage/Loadable';
 import { LoginPage } from './pages/LoginPage/Loadable';
 import { ListPage } from './pages/ListPage/Loadable';
 import { DetailPage } from './pages/DetailPage/Loadable';
+import { CartPage } from './pages/CartPage/Loadable';
+import { BuyPage } from './pages/BuyPage/Loadable';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -42,6 +44,8 @@ export function App() {
           <Route exact path="/profile" component={UserProfilePage} />
           <Route exact path="/list" component={ListPage} />
           <Route exact path="/detail" component={DetailPage} />
+          <Route exact path="/cart" component={CartPage} />
+          <Route exact path="/buy" component={BuyPage} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

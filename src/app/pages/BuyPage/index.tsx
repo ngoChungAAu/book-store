@@ -3,28 +3,28 @@ import { OneColumnLayout } from 'app/components/Layout';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
-  BottomProfile,
-  FormProfile,
-  InputProfile,
-  LabelProfile,
-  TopProfile,
+  BottomBuy,
+  BuyListItem,
+  FormBuy,
+  InputBuy,
+  LabelBuy,
+  TopBuy,
 } from './style';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import ItemBuy from 'app/components/ItemBuy';
+import ButtonCustom from 'app/components/ButtonCustom';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ButtonCustom from 'app/components/ButtonCustom';
 
-interface ProfileForm {
+interface InforForm {
   firstName: string;
   lastName: string;
-  username: string;
-  email: string;
   phone: string;
   address: string;
 }
 
-export function UserProfilePage() {
+export function BuyPage() {
   const schema = yup.object().shape({
     firstName: yup
       .string()
@@ -32,15 +32,6 @@ export function UserProfilePage() {
       .max(50, 'Không vượt quá 50 kí tự!'),
     lastName: yup
       .string()
-      .required('Không thể bỏ trống!')
-      .max(50, 'Không vượt quá 50 kí tự!'),
-    username: yup
-      .string()
-      .required('Không thể bỏ trống!')
-      .max(50, 'Không vượt quá 50 kí tự!'),
-    email: yup
-      .string()
-      .email('Sai định dạng email!')
       .required('Không thể bỏ trống!')
       .max(50, 'Không vượt quá 50 kí tự!'),
     phone: yup
@@ -53,25 +44,55 @@ export function UserProfilePage() {
     address: yup.string().required('Không thể bỏ trống!'),
   });
 
-  const form = useForm<ProfileForm>({
+  const form = useForm<InforForm>({
     mode: 'all',
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: ProfileForm) => {};
+  const onSubmit = (data: InforForm) => {};
 
   return (
     <>
       <Helmet>
-        <title>Thông tin tài khoản</title>
+        <title>Đặt hàng</title>
       </Helmet>
       <OneColumnLayout>
-        <Box sx={{ mt: '50px', mb: '50px' }}>
-          <TopProfile>
-            <AccountCircleIcon />
-          </TopProfile>
-          <BottomProfile>
-            <FormProfile onSubmit={form.handleSubmit(onSubmit)}>
+        <Box sx={{ mt: '50px', mb: '50px', minHeight: 'calc(100vh - 260px)' }}>
+          <TopBuy>
+            <ReceiptLongIcon />
+            <Typography component="h2">Thông tin đơn hàng</Typography>
+          </TopBuy>
+
+          <BottomBuy>
+            <Box
+              sx={{
+                mb: '20px',
+                width: '600px',
+                fontSize: '29px',
+                lineHeight: '36px',
+                fontWeight: 700,
+                textTransform: 'capitalize',
+              }}
+            >
+              Danh sách sản phẩm
+            </Box>
+            <BuyListItem>
+              <Box className="inner_list">
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+                <ItemBuy />
+              </Box>
+            </BuyListItem>
+
+            <FormBuy onSubmit={form.handleSubmit(onSubmit)}>
               <Box
                 sx={{
                   fontSize: '29px',
@@ -80,11 +101,11 @@ export function UserProfilePage() {
                   textTransform: 'capitalize',
                 }}
               >
-                Thông tin tài khoản
+                Thông tin người mua
               </Box>
               <Box>
-                <LabelProfile>Họ</LabelProfile>
-                <InputProfile
+                <LabelBuy>Họ</LabelBuy>
+                <InputBuy
                   {...form.register('lastName')}
                   type="text"
                   defaultValue="Âu"
@@ -95,8 +116,8 @@ export function UserProfilePage() {
                 />
               </Box>
               <Box>
-                <LabelProfile>Tên</LabelProfile>
-                <InputProfile
+                <LabelBuy>Tên</LabelBuy>
+                <InputBuy
                   {...form.register('firstName')}
                   type="text"
                   defaultValue="Ngô"
@@ -107,20 +128,8 @@ export function UserProfilePage() {
                 />
               </Box>
               <Box>
-                <LabelProfile>Email</LabelProfile>
-                <InputProfile
-                  {...form.register('email')}
-                  type="text"
-                  defaultValue="audavn@gmail.com"
-                  fullWidth
-                  autoComplete="off"
-                  error={Boolean(form.formState.errors.email)}
-                  helperText={form.formState.errors.email?.message}
-                />
-              </Box>
-              <Box>
-                <LabelProfile>SĐT</LabelProfile>
-                <InputProfile
+                <LabelBuy>SĐT</LabelBuy>
+                <InputBuy
                   {...form.register('phone')}
                   type="text"
                   defaultValue="033454578"
@@ -132,8 +141,8 @@ export function UserProfilePage() {
               </Box>
 
               <Box>
-                <LabelProfile>Địa chỉ</LabelProfile>
-                <InputProfile
+                <LabelBuy>Địa chỉ</LabelBuy>
+                <InputBuy
                   {...form.register('address')}
                   type="text"
                   defaultValue="Hà Nội"
@@ -159,7 +168,7 @@ export function UserProfilePage() {
                       textAlign: 'center',
                     }}
                   >
-                    Cập nhật thông tin thất bại!
+                    Đặt hàng thất bại!
                   </Typography>
                 )}
 
@@ -168,11 +177,11 @@ export function UserProfilePage() {
                   variant="contained"
                   // loading={registerSelect.loading}
                 >
-                  {false ? '' : 'Cập nhật'}
+                  {false ? '' : 'Đặt hàng'}
                 </ButtonCustom>
               </Box>
-            </FormProfile>
-          </BottomProfile>
+            </FormBuy>
+          </BottomBuy>
         </Box>
       </OneColumnLayout>
     </>

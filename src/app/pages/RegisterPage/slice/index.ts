@@ -31,10 +31,6 @@ const slice = createSlice({
       state.errorMessage = action.payload;
     },
 
-    resetSuccess(state) {
-      state.success = false;
-    },
-
     resetRegister(state) {
       state.loading = false;
       state.fail = false;
@@ -44,10 +40,10 @@ const slice = createSlice({
   },
 });
 
-export const { actions: registerActions } = slice;
+export const { actions } = slice;
 
 export const useRegisterSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
   useInjectSaga({ key: slice.name, saga: registerSaga });
-  return { registerActions: slice.actions };
+  return { actions: slice.actions };
 };

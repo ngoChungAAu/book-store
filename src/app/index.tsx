@@ -16,18 +16,32 @@ import { ThemeProvider } from '@mui/material/styles';
 import DefaultTheme from 'theme/defaultTheme';
 
 import { useTranslation } from 'react-i18next';
-import { NotFoundPage } from './components/NotFoundPage/Loadable';
-import { HomePage } from './pages/HomePage/Loadable';
+import { NotFoundPage } from 'app/components/NotFoundPage/Loadable';
+import { HomePage } from 'app/pages/HomePage/Loadable';
 import { UserProfilePage } from 'app/pages/UserProfilePage/Loadable';
 import { RegisterPage } from 'app/pages/RegisterPage/Loadable';
-import { LoginPage } from './pages/LoginPage/Loadable';
-import { ListPage } from './pages/ListPage/Loadable';
-import { DetailPage } from './pages/DetailPage/Loadable';
-import { CartPage } from './pages/CartPage/Loadable';
-import { BuyPage } from './pages/BuyPage/Loadable';
+import { LoginPage } from 'app/pages/LoginPage/Loadable';
+import { ListPage } from 'app/pages/ListPage/Loadable';
+import { DetailPage } from 'app/pages/DetailPage/Loadable';
+import { CartPage } from 'app/pages/CartPage/Loadable';
+import { BuyPage } from 'app/pages/BuyPage/Loadable';
+import PublicRoute from 'app/components/PublicRoute';
+import { useGlobalSlice } from 'app/components/GlobalState';
+import { useDispatch } from 'react-redux';
 
 export function App() {
   const { i18n } = useTranslation();
+
+  const dispatch = useDispatch();
+
+  const { actions } = useGlobalSlice();
+
+  React.useEffect(() => {
+    if (localStorage.getItem('access_token')) {
+      dispatch(actions.getUserProfileRequest());
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <Helmet
@@ -39,8 +53,8 @@ export function App() {
         <CssBaseline />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/login" component={LoginPage} />
+          <PublicRoute exact path="/register" component={RegisterPage} />
+          <PublicRoute exact path="/login" component={LoginPage} />
           <Route exact path="/profile" component={UserProfilePage} />
           <Route exact path="/list" component={ListPage} />
           <Route exact path="/detail" component={DetailPage} />

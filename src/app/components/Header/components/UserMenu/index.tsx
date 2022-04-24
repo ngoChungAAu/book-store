@@ -5,9 +5,15 @@ import UserProfile from '../../assets/UserProfile.svg';
 import Logout from '../../assets/Logout.svg';
 import { useHistory } from 'react-router-dom';
 import { styled } from '@mui/system';
+import { useDispatch } from 'react-redux';
+import { useGlobalSlice } from 'app/components/GlobalState';
 
 export default function UserMenu() {
   const history = useHistory();
+
+  const dispatch = useDispatch();
+
+  const { actions } = useGlobalSlice();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -21,7 +27,10 @@ export default function UserMenu() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    dispatch(actions.outUser());
+    window.location.href = '/login';
+  };
 
   return (
     <>

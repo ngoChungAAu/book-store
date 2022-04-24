@@ -22,22 +22,14 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Helmet } from 'react-helmet-async';
 
 interface LoginForm {
-  email: string;
+  username: string;
   password: string;
 }
 
 export function LoginPage() {
   const schema = yup.object().shape({
-    email: yup
-      .string()
-      .required('This field is required')
-      .max(50, 'Invalid format email')
-      .email('Invalid format email'),
-
-    password: yup
-      .string()
-      .required('This field is required')
-      .max(50, 'Invalid format password'),
+    username: yup.string().required('Không thể bỏ trống!'),
+    password: yup.string().required('Không thể bỏ trống'),
   });
 
   const form = useForm<LoginForm>({
@@ -51,15 +43,14 @@ export function LoginPage() {
   const [messageError, setMessageError] = React.useState('');
   const [show, setShow] = React.useState<boolean>(false);
 
-  const { loginActions } = useLoginSlice();
+  const { actions } = useLoginSlice();
   const loginSelect = useSelector(selectLogin);
 
   const onSubmit = (data: LoginForm) => {
     setMessageError('');
     dispatch(
-      loginActions.loginRequest({
-        grant_type: 'password',
-        username: data.email,
+      actions.loginRequest({
+        username: data.username,
         password: data.password,
       }),
     );
@@ -67,6 +58,7 @@ export function LoginPage() {
 
   const handleBackToRegister = () => {
     history.push('/register');
+    dispatch(actions.resetLogin());
   };
 
   React.useEffect(() => {
@@ -74,12 +66,12 @@ export function LoginPage() {
       history.push('/');
     }
     switch (loginSelect.errorMessage) {
-      case 'account.not.verified':
-        setMessageError('Please activate your email before login!');
+      case 'Username is invalid':
+        setMessageError('Sai tài khoản!');
         break;
 
-      case 'username.or.password.incorrect':
-        setMessageError('Username or password is incorrect!');
+      case 'Password is invalid':
+        setMessageError('Sai mật khẩu!');
         break;
 
       default:
@@ -99,18 +91,18 @@ export function LoginPage() {
             <TitleLogin>Đăng nhập</TitleLogin>
             <LoginFormStyle onSubmit={form.handleSubmit(onSubmit)}>
               <Box sx={{ width: '100%' }}>
-                <LabelLogin>Email</LabelLogin>
+                <LabelLogin>Tài khoản</LabelLogin>
                 <InputLogin
-                  {...form.register('email')}
+                  {...form.register('username')}
                   type="text"
                   autoComplete="off"
-                  error={Boolean(form.formState.errors.email)}
-                  helperText={form.formState.errors.email?.message}
+                  error={Boolean(form.formState.errors.username)}
+                  helperText={form.formState.errors.username?.message}
                   sx={{ width: '100%' }}
                 />
               </Box>
               <Box sx={{ width: '100%' }}>
-                <LabelLogin>Password</LabelLogin>
+                <LabelLogin>Mật khẩu</LabelLogin>
                 <InputLogin
                   {...form.register('password')}
                   type={show ? 'text' : 'password'}

@@ -3,9 +3,14 @@ import ButtonCustom from 'app/components/ButtonCustom';
 import { useHistory } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import UserMenu from '../UserMenu';
+import { useSelector } from 'react-redux';
+import { selectGlobal } from 'app/components/GlobalState/selector';
 
 export default function ButtonGroupHeader() {
   const history = useHistory();
+
+  const { user } = useSelector(selectGlobal);
+
   const handleLogin = () => history.push('/login');
   const handleRegister = () => history.push('/register');
   const handleCart = () => history.push('/cart');
@@ -25,7 +30,7 @@ export default function ButtonGroupHeader() {
           <ShoppingCartIcon sx={{ color: '#000' }} />
         </Badge>
       </IconButton>
-      {false ? (
+      {user === null ? (
         <>
           <Link
             onClick={handleRegister}

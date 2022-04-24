@@ -1,32 +1,22 @@
 import { call, takeLatest, put, all } from 'redux-saga/effects';
 import { authService } from 'services/api/authService';
-import { loginActions as actions } from '.';
+import { actions } from '.';
+import { actions as globalActions } from 'app/components/GlobalState';
 import { isEmpty } from 'lodash';
 
 function* handleLogin(action) {
   try {
     const response = yield call(authService.login, action.payload);
 
-    localStorage.setItem(
-      'cyber8_dapp_access_token',
-      response.data.access_token,
-    );
+    localStorage.setItem('access_token', response.data.token);
 
-    localStorage.setItem(
-      'cyber8_dapp_refresh_token',
-      response.data.refresh_token,
-    );
+    const res = yield call(authService.getCurrentProfile);
 
-    localStorage.setItem('cyber8_dapp_jti', response.data.jti);
-
-    // const res = yield call(authService.getProfile, response.data.access_token);
-
-    // if (!isEmpty(res.data.data)) {
-    //   yield put(globalActions.setUser(res.data.data));
-    // }
+    yield put(globalActions.setUser(res.data.item));
 
     yield put(actions.loginSuccess());
   } catch (error: any) {
+    console.log(error.response);
     yield put(
       actions.loginFailure(
         isEmpty(error.response.data.message)
@@ -34,8 +24,6 @@ function* handleLogin(action) {
           : error.response.data.message,
       ),
     );
-
-    // yield put(globalActions.outUser());
   }
 }
 

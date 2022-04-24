@@ -77,7 +77,7 @@ export function RegisterPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { registerActions } = useRegisterSlice();
+  const { actions } = useRegisterSlice();
   const registerSelect = useSelector(selectRegister);
 
   const [messageError, setMessageError] = React.useState<string>('');
@@ -86,23 +86,35 @@ export function RegisterPage() {
   const onSubmit = (data: RegisterForm) => {
     setMessageError('');
     dispatch(
-      registerActions.registerRequest({
+      actions.registerRequest({
+        address: data.address,
         email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
         password: data.password,
-        name: data.username,
+        phone: data.phone,
+        username: data.username,
       }),
     );
   };
 
   const handleBackToLogin = () => {
     history.push('/login');
-    dispatch(registerActions.resetRegister());
+    dispatch(actions.resetRegister());
   };
 
   React.useEffect(() => {
     switch (registerSelect.errorMessage) {
-      case 'user.register.email-already-existed':
-        setMessageError('This email already exists. Please try again');
+      case 'Email is already exist':
+        setMessageError('Email này đã được đăng ký!');
+        break;
+
+      case 'Username is already exist':
+        setMessageError('Tài khoản này đã được đăng ký!');
+        break;
+
+      case 'Phone number is already exist':
+        setMessageError('Số điện thoại này đã được đăng ký!');
         break;
 
       default:
@@ -147,7 +159,7 @@ export function RegisterPage() {
               </Box>
 
               <Box sx={{ width: '100%' }}>
-                <LabelRegister>Username *</LabelRegister>
+                <LabelRegister>Tài khoản *</LabelRegister>
                 <InputRegister
                   {...form.register('username')}
                   type="text"
@@ -159,7 +171,7 @@ export function RegisterPage() {
               </Box>
 
               <Box sx={{ width: '100%' }}>
-                <LabelRegister>Password *</LabelRegister>
+                <LabelRegister>Mật khẩu *</LabelRegister>
                 <InputRegister
                   {...form.register('password')}
                   type={show ? 'text' : 'password'}
@@ -238,6 +250,17 @@ export function RegisterPage() {
                     }}
                   >
                     {messageError}
+                  </Typography>
+                )}
+
+                {registerSelect.success && (
+                  <Typography
+                    sx={{
+                      color: '#51BF29',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Đăng ký thành công!
                   </Typography>
                 )}
 

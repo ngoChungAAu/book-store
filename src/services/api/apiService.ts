@@ -6,7 +6,7 @@ const apiClient = axios.create(config.api);
 // Request interceptor
 apiClient.interceptors.request.use(
   (config: any) => {
-    const accessToken = localStorage.getItem('cyber8_dapp_access_token');
+    const accessToken = localStorage.getItem('access_token');
 
     if (accessToken) {
       config.headers.common.Authorization = `Bearer ${accessToken}`;

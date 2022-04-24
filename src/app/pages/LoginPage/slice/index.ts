@@ -32,7 +32,6 @@ const slice = createSlice({
       state.fail = true;
       state.errorMessage = action.payload;
     },
-
     resetLogin(state) {
       state.loading = false;
       state.success = false;
@@ -42,10 +41,10 @@ const slice = createSlice({
   },
 });
 
-export const { actions: loginActions } = slice;
+export const { actions } = slice;
 
 export const useLoginSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
   useInjectSaga({ key: slice.name, saga: loginSaga });
-  return { loginActions: slice.actions };
+  return { actions: slice.actions };
 };

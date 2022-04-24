@@ -1,6 +1,6 @@
 import { call, takeLatest, put, all, delay } from 'redux-saga/effects';
 import { authService } from 'services/api/authService';
-import { registerActions as actions } from '.';
+import { actions } from '.';
 import { isEmpty } from 'lodash';
 
 function* handleRegister(action) {

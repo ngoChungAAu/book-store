@@ -40,6 +40,8 @@ export function App() {
     if (localStorage.getItem('access_token')) {
       dispatch(actions.getUserProfileRequest());
     }
+
+    dispatch(actions.getCategoryListRequest({ page: '', size: '' }));
   }, []);
 
   return (
@@ -56,8 +58,8 @@ export function App() {
           <PublicRoute exact path="/register" component={RegisterPage} />
           <PublicRoute exact path="/login" component={LoginPage} />
           <Route exact path="/profile" component={UserProfilePage} />
-          <Route exact path="/list" component={ListPage} />
-          <Route exact path="/detail" component={DetailPage} />
+          <Route exact path="/product/:id" component={ListPage} />
+          <Route exact path="/detail/:id" component={DetailPage} />
           <Route exact path="/cart" component={CartPage} />
           <Route exact path="/buy" component={BuyPage} />
           <Route component={NotFoundPage} />

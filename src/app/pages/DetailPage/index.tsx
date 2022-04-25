@@ -7,8 +7,33 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import image from './assets/ImageDetail.png';
 import List from 'app/components/List';
+import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useGlobalSlice } from 'app/components/GlobalState';
+import { selectGlobal } from 'app/components/GlobalState/selector';
+import _ from 'lodash';
 
 export function DetailPage() {
+  const { id } = useParams<{ id: string }>();
+
+  const history = useHistory();
+
+  const dispatch = useDispatch();
+
+  const { actions: globalActions } = useGlobalSlice();
+
+  const { product } = useSelector(selectGlobal);
+
+  React.useEffect(() => {
+    dispatch(globalActions.getProductDetailRequest(id));
+
+    dispatch(
+      globalActions.getProductListRequest({
+        categoryId: product.detail.categoryId,
+      }),
+    );
+  }, [id]);
+
   return (
     <>
       <Helmet>
@@ -17,10 +42,12 @@ export function DetailPage() {
       <OneColumnLayout>
         <DetailPageWrapper>
           <Box sx={{ pt: '30px', pb: '50px' }}>
-            <BreadcumbItem>Trang chủ</BreadcumbItem> /{' '}
-            <BreadcumbItem>Truyện tranh</BreadcumbItem> /{' '}
+            <BreadcumbItem onClick={() => history.push('/')}>
+              Trang chủ
+            </BreadcumbItem>{' '}
+            / <BreadcumbItem>Truyện tranh</BreadcumbItem> /{' '}
             <BreadcumbItem className="selected">
-              Tranh truyện dân gian Việt Nam - Lý Ông Trọng
+              {product.detail.title}
             </BreadcumbItem>
           </Box>
 
@@ -28,16 +55,18 @@ export function DetailPage() {
             <Grid item xs={12} md={5}>
               <ImageBox>
                 <img
-                  src={image}
-                  alt="Tranh truyện dân gian Việt Nam - Lý Ông Trọng"
+                  src={
+                    !_.isEmpty(product.detail.images[0])
+                      ? product.detail.images[0].link
+                      : ''
+                  }
+                  alt={product.detail.title}
                 />
               </ImageBox>
             </Grid>
             <Grid item xs={12} md={7}>
               <InforBox>
-                <Box className="title">
-                  Tranh truyện dân gian Việt Nam - Lý Ông Trọng
-                </Box>
+                <Box className="title">{product.detail.title}</Box>
                 <hr />
                 <Grid container rowSpacing={2} className="infor">
                   <Grid item md={6} className="left">
@@ -45,20 +74,25 @@ export function DetailPage() {
                       <FiberManualRecordIcon />
                       Giá bán:{' '}
                       <span className="price">
-                        {Number('18000000').toLocaleString('en-US')} VNĐ
+                        {Number(product.detail.price).toLocaleString('en-US')}{' '}
+                        VNĐ
                       </span>
                     </Typography>
                     <Typography component="p">
                       <FiberManualRecordIcon />
-                      Tác giả: <span>Tân Hoàng Minh</span>
+                      Tác giả: <span>{product.detail.author}</span>
                     </Typography>
                     <Typography component="p">
                       <FiberManualRecordIcon />
-                      Số trang: <span>300</span>
+                      Số trang: <span>{product.detail.numberOfPage}</span>
                     </Typography>
                     <Typography component="p">
                       <FiberManualRecordIcon />
-                      Số lượng: <span>100</span>
+                      Số lượng:{' '}
+                      <span>
+                        {product.detail.currentNumber -
+                          product.detail.quantitySelled}
+                      </span>
                     </Typography>
                   </Grid>
                   <Grid item md={6} className="right">
@@ -79,43 +113,14 @@ export function DetailPage() {
                 <Box className="description">
                   <Typography component="p">Giới thiệu sách</Typography>
                   <Typography component="p">
-                    Một ngày nọ, cậu bé 3 tuổi Maris bỗng xuất hiện trước mặt
-                    tam ma vương tàn ác thống trị ma giới. Họ sẽ xử tử, bắt nhóc
-                    tì làm nô lệ, hay... nuôi dạy bé? Và thế là hành trình nuôi
-                    dạy trẻ của 3 người đàn ông kéo theo toàn thể ma giới, bắt
-                    đầu! Nếu đã mê những tác phẩm với phong cách hài hước, giật
-                    gân với bối cảnh giả tưởng, nhưng để lại sau đó là những
-                    thông điệp rất đáng suy ngẫm ngoài đời thực, thì MA VƯƠNG
-                    BẢO MẪU chính là series tiếp theo mà bạn nên sở hữu! Bằng
-                    phong cách thể hiện "rất đỗi tự nhiên", tác giả Kousuke
-                    Iijima sẽ dẫn bạn vào những câu chuyện dở khóc dở cười xoay
-                    quanh việc nuôi dạy một chú nhóc loài người của "ba ông bố
-                    Ma Vương"! Dễ thương xỉu đấy, hài hước vô cùng đấy, và chỉ
-                    cần có "tình yêu thương", thì mọi ranh giới đều có thể xóa
-                    nhòa! Hãy cùng thưởng thức trọn bộ 8 tập truyện của MA VƯƠNG
-                    BẢO MẪU, bắt đầu từ ngày 18.04.2022 nha. Một ngày nọ, cậu bé
-                    3 tuổi Maris bỗng xuất hiện trước mặt tam ma vương tàn ác
-                    thống trị ma giới. Họ sẽ xử tử, bắt nhóc tì làm nô lệ,
-                    hay... nuôi dạy bé? Và thế là hành trình nuôi dạy trẻ của 3
-                    người đàn ông kéo theo toàn thể ma giới, bắt đầu! Nếu đã mê
-                    những tác phẩm với phong cách hài hước, giật gân với bối
-                    cảnh giả tưởng, nhưng để lại sau đó là những thông điệp rất
-                    đáng suy ngẫm ngoài đời thực, thì MA VƯƠNG BẢO MẪU chính là
-                    series tiếp theo mà bạn nên sở hữu! Bằng phong cách thể hiện
-                    "rất đỗi tự nhiên", tác giả Kousuke Iijima sẽ dẫn bạn vào
-                    những câu chuyện dở khóc dở cười xoay quanh việc nuôi dạy
-                    một chú nhóc loài người của "ba ông bố Ma Vương"! Dễ thương
-                    xỉu đấy, hài hước vô cùng đấy, và chỉ cần có "tình yêu
-                    thương", thì mọi ranh giới đều có thể xóa nhòa! Hãy cùng
-                    thưởng thức trọn bộ 8 tập truyện của MA VƯƠNG BẢO MẪU, bắt
-                    đầu từ ngày 18.04.2022 nha.
+                    {product.detail.longDescription}
                   </Typography>
                 </Box>
               </InforBox>
             </Grid>
           </Grid>
 
-          <List />
+          <List title="Sách cùng chủ đề" list={product.list} />
         </DetailPageWrapper>
       </OneColumnLayout>
     </>

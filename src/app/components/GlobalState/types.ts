@@ -1,6 +1,32 @@
 /* --- STATE --- */
 export interface GlobalState {
   user: IProfile | null;
+
+  listCategory: ICategory[];
+
+  product: {
+    list: Array<IProduct>;
+    category: string;
+    total_item: number;
+    total_page: number;
+
+    page: number;
+    size: number;
+
+    detail:
+      | IProduct
+      | {
+          title: '';
+          longDescription: '';
+          categoryId: 0;
+          price: 0;
+          author: '';
+          currentNumber: 0;
+          numberOfPage: 0;
+          quantitySelled: 0;
+          images: [{ link: '' }];
+        };
+  };
 }
 
 export interface IProfile {
@@ -18,4 +44,42 @@ export interface IProfile {
   email: string | null;
   phone: string | null;
   role: string | null;
+}
+
+export interface ICategory {
+  id: number;
+  status: number;
+  createAt: string | null;
+  createBy: string | null;
+  updateAt: string | null;
+  updateBy: string | null;
+  name: string;
+  description: string;
+  slug: string | null;
+  parentsId: null;
+}
+
+export interface IProduct {
+  id: number;
+  status: number;
+  createAt: string | null;
+  createBy: string | null;
+  updateAt: string | null;
+  updateBy: string | null;
+  title: string;
+  shortDescription: string | null;
+  longDescription: string;
+  categoryId: number;
+  price: number;
+  author: string;
+  currentNumber: number;
+  numberOfPage: number;
+  slug: string | null;
+  quantitySelled: number;
+  images: IImage[];
+}
+
+export interface IImage {
+  id: number;
+  link: string;
 }

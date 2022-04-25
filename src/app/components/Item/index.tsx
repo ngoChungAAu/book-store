@@ -4,20 +4,29 @@ import Sach1 from './images/sach2.png';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-export default function Item() {
-  const price = 1738973987;
+interface Props {
+  id: number;
+  image: string;
+  title: string;
+  author: string;
+  price: number;
+}
+
+export default function Item(props: Props) {
   const history = useHistory();
-  const handleToDo = () => history.push('/detail');
+
+  const handleToDo = () => history.push(`/detail/${props.id}`);
+
   return (
     <ItemWrapper onClick={handleToDo}>
       <Box className="image">
-        <img src={Sach1} alt="" />
+        <img src={props.image} alt={props.title} />
       </Box>
-      <Box className="title">Chú T Góc Nhựa)</Box>
+      <Box className="title">{props.title}</Box>
 
-      <Box className="author">Gege Akutami</Box>
+      <Box className="author">{props.price}</Box>
 
-      <Box className="price">{price.toLocaleString('en-US')} VNĐ</Box>
+      <Box className="price">{props.price.toLocaleString('en-US')} VNĐ</Box>
     </ItemWrapper>
   );
 }

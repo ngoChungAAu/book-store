@@ -18,7 +18,7 @@ export default function SelectList(props: Props) {
       MenuProps={{
         sx: {
           '.MuiMenu-paper': {
-            backgroundColor: 'transparent',
+            backgroundColor: '#FFF',
             width: '159px',
 
             borderRadius: '0px 0 12px 12px',

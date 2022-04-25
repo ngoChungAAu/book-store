@@ -2,14 +2,16 @@ import { Box, TextField, TextFieldProps } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const LoginPageWrapper = styled(Box)(({ theme }) => ({
+  minHeight: 'calc(100vh - 160px)',
   width: '100%',
   display: 'flex',
   justifyContent: 'center',
 }));
 
 export const LoginBox = styled(Box)(({ theme }) => ({
-  margin: '50px 0px',
+  marginTop: '50px',
   width: '555px',
+  height: '600px',
   padding: '50px',
   border: '1px solid #00E5FF',
   borderRadius: '24px',

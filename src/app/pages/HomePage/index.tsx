@@ -16,8 +16,8 @@ export function HomePage() {
         <Box sx={{ width: '100%' }}>
           <Slide />
           <Feature />
-          <List />
-          <List />
+          {/* <List />
+          <List /> */}
         </Box>
       </OneColumnLayout>
     </>

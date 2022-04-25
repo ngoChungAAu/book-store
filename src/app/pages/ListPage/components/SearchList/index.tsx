@@ -9,7 +9,7 @@ interface Props {
 export default function SearchList(props: Props) {
   return (
     <TextFieldStyle
-      placeholder="Search"
+      placeholder="Tìm kiếm"
       onChange={e => props.setValue(e.target.value)}
       InputProps={{
         startAdornment: (

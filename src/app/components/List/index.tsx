@@ -2,13 +2,19 @@ import React from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import Item from 'app/components/Item';
+import _ from 'lodash';
 
-export default function List() {
+interface Props {
+  title: string;
+  list: any;
+}
+
+export default function List(props: Props) {
   return (
     <ListWrapper>
-      <Typography component="h2">Sách mới</Typography>
+      <Typography component="h2">{props.title}</Typography>
       <Grid container spacing={8}>
-        {[0, 1, 2, 3].map((e, i) => (
+        {props.list.map((e, i) => (
           <Grid
             key={i}
             item
@@ -17,7 +23,13 @@ export default function List() {
             lg={3}
             sx={{ display: 'flex', justifyContent: 'center' }}
           >
-            <Item />
+            <Item
+              id={e.id}
+              image={!_.isEmpty(e.images[0]?.link) ? e.images[0].link : ''}
+              title={e.title}
+              author={e.author}
+              price={e.price}
+            />
           </Grid>
         ))}
       </Grid>

@@ -28,6 +28,7 @@ import { BuyPage } from 'app/pages/BuyPage/Loadable';
 import PublicRoute from 'app/components/PublicRoute';
 import { useGlobalSlice } from 'app/components/GlobalState';
 import { useDispatch } from 'react-redux';
+import ProtectedRoute from './components/ProtectedRoute';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -57,7 +58,7 @@ export function App() {
           <Route exact path="/" component={HomePage} />
           <PublicRoute exact path="/register" component={RegisterPage} />
           <PublicRoute exact path="/login" component={LoginPage} />
-          <Route exact path="/profile" component={UserProfilePage} />
+          <ProtectedRoute exact path="/profile" component={UserProfilePage} />
           <Route exact path="/product/:id" component={ListPage} />
           <Route exact path="/detail/:id" component={DetailPage} />
           <Route exact path="/cart" component={CartPage} />

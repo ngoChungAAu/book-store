@@ -30,6 +30,8 @@ export function DetailPage() {
     dispatch(
       globalActions.getProductListRequest({
         categoryId: product.detail.categoryId,
+        page: 1,
+        size: 4,
       }),
     );
   }, [id]);

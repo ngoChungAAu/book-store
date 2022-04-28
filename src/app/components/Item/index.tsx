@@ -24,7 +24,7 @@ export default function Item(props: Props) {
       </Box>
       <Box className="title">{props.title}</Box>
 
-      <Box className="author">{props.price}</Box>
+      <Box className="author">{props.author}</Box>
 
       <Box className="price">{props.price.toLocaleString('en-US')} VNĐ</Box>
     </ItemWrapper>

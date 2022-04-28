@@ -1,4 +1,5 @@
 import { call, takeLatest, put, all } from 'redux-saga/effects';
+import { accountService } from 'services/api/accountService';
 import { authService } from 'services/api/authService';
 import { categoryService } from 'services/api/categoryService';
 import { productService } from 'services/api/productService';
@@ -12,6 +13,20 @@ function* handleGetUserProfile() {
   } catch (error: any) {
     yield put(actions.outUser());
     window.location.href = '/login';
+  }
+}
+
+function* handleUpdateProfile(action) {
+  const { id, data } = action.payload;
+  try {
+    yield call(accountService.updateAccount, id, data);
+
+    yield put(actions.setUpdateStatus(true));
+
+    yield put(actions.setLoadingUpdateProfile(true));
+  } catch (error) {
+    yield put(actions.setErrorMessage('Cập nhật thông tin thất bại!'));
+    yield put(actions.setLoadingUpdateProfile(false));
   }
 }
 
@@ -83,6 +98,10 @@ export function* watchHandleGetUserProfile() {
   yield takeLatest(actions.getUserProfileRequest.type, handleGetUserProfile);
 }
 
+export function* watchHandleUpdateUserProfile() {
+  yield takeLatest(actions.updateProfileRequest.type, handleUpdateProfile);
+}
+
 export function* watchHandleGetCategoryList() {
   yield takeLatest(actions.getCategoryListRequest.type, handleGetListCategory);
 }
@@ -101,6 +120,7 @@ export function* watchHandleGetProductDetail() {
 export default function* globalSaga() {
   yield all([
     watchHandleGetUserProfile(),
+    watchHandleUpdateUserProfile(),
     watchHandleGetCategoryList(),
     watchHandleGetProductList(),
     watchHandleGetProductDetail(),

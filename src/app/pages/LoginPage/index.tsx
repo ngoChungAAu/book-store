@@ -80,6 +80,10 @@ export function LoginPage() {
     }
   }, [loginSelect.success, loginSelect.fail, loginSelect.errorMessage]);
 
+  React.useEffect(() => {
+    dispatch(actions.resetLogin());
+  }, []);
+
   return (
     <>
       <Helmet>

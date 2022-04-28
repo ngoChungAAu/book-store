@@ -10,8 +10,9 @@ export const LoginPageWrapper = styled(Box)(({ theme }) => ({
 
 export const LoginBox = styled(Box)(({ theme }) => ({
   marginTop: '50px',
+  marginBottom: '50px',
   width: '555px',
-  height: '600px',
+  maxHeight: '550px',
   padding: '50px',
   border: '1px solid #00E5FF',
   borderRadius: '24px',

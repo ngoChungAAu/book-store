@@ -18,7 +18,7 @@ export default function List(props: Props) {
           <Grid
             key={i}
             item
-            xs={6}
+            xs={12}
             sm={4}
             lg={3}
             sx={{ display: 'flex', justifyContent: 'center' }}

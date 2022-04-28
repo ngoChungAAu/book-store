@@ -1,6 +1,8 @@
 /* --- STATE --- */
 export interface GlobalState {
   user: IProfile | null;
+  loadingUpdateProfile: boolean;
+  updateProfileStatus: boolean;
 
   listCategory: ICategory[];
 
@@ -16,17 +18,19 @@ export interface GlobalState {
     detail:
       | IProduct
       | {
-          title: '';
-          longDescription: '';
-          categoryId: 0;
-          price: 0;
-          author: '';
-          currentNumber: 0;
-          numberOfPage: 0;
-          quantitySelled: 0;
-          images: [{ link: '' }];
+          title: string;
+          longDescription: string;
+          categoryId: number;
+          price: number;
+          author: string;
+          currentNumber: number;
+          numberOfPage: number;
+          quantitySelled: number;
+          images: [{ link: string }];
         };
   };
+
+  errorMessage: string;
 }
 
 export interface IProfile {

@@ -14,11 +14,14 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ButtonCustom from 'app/components/ButtonCustom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGlobal } from 'app/components/GlobalState/selector';
+import { useGlobalSlice } from 'app/components/GlobalState';
+import { fontFamily } from '@mui/system';
 
 interface ProfileForm {
   firstName: string;
   lastName: string;
-  username: string;
   email: string;
   phone: string;
   address: string;
@@ -31,10 +34,6 @@ export function UserProfilePage() {
       .required('Không thể bỏ trống!')
       .max(50, 'Không vượt quá 50 kí tự!'),
     lastName: yup
-      .string()
-      .required('Không thể bỏ trống!')
-      .max(50, 'Không vượt quá 50 kí tự!'),
-    username: yup
       .string()
       .required('Không thể bỏ trống!')
       .max(50, 'Không vượt quá 50 kí tự!'),
@@ -58,7 +57,28 @@ export function UserProfilePage() {
     resolver: yupResolver(schema),
   });
 
+  const dispatch = useDispatch();
+
+  const { user, updateProfileStatus, loadingUpdateProfile, errorMessage } =
+    useSelector(selectGlobal);
+
+  const { actions } = useGlobalSlice();
+
   const onSubmit = (data: ProfileForm) => {};
+
+  React.useEffect(() => {
+    if (user === null) {
+      dispatch(actions.getUserProfileRequest());
+    } else {
+      form.reset({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        address: user.address || '',
+      });
+    }
+  }, [user]);
 
   return (
     <>
@@ -87,7 +107,7 @@ export function UserProfilePage() {
                 <InputProfile
                   {...form.register('lastName')}
                   type="text"
-                  defaultValue="Âu"
+                  defaultValue={user?.lastName}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.lastName)}
@@ -99,7 +119,7 @@ export function UserProfilePage() {
                 <InputProfile
                   {...form.register('firstName')}
                   type="text"
-                  defaultValue="Ngô"
+                  defaultValue={user?.firstName}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.firstName)}
@@ -111,7 +131,7 @@ export function UserProfilePage() {
                 <InputProfile
                   {...form.register('email')}
                   type="text"
-                  defaultValue="audavn@gmail.com"
+                  defaultValue={user?.email}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.email)}
@@ -123,7 +143,7 @@ export function UserProfilePage() {
                 <InputProfile
                   {...form.register('phone')}
                   type="text"
-                  defaultValue="033454578"
+                  defaultValue={user?.phone}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.phone)}
@@ -136,7 +156,7 @@ export function UserProfilePage() {
                 <InputProfile
                   {...form.register('address')}
                   type="text"
-                  defaultValue="Hà Nội"
+                  defaultValue={user?.address}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.address)}
@@ -152,23 +172,24 @@ export function UserProfilePage() {
                   gap: '20px',
                 }}
               >
-                {true && (
-                  <Typography
-                    sx={{
-                      color: '#F04F5B',
-                      textAlign: 'center',
-                    }}
-                  >
-                    Cập nhật thông tin thất bại!
-                  </Typography>
-                )}
+                {!updateProfileStatus &&
+                  errorMessage === 'Cập nhật thông tin thất bại!' && (
+                    <Typography
+                      sx={{
+                        color: '#F04F5B',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {errorMessage}
+                    </Typography>
+                  )}
 
                 <ButtonCustom
                   type="submit"
                   variant="contained"
-                  // loading={registerSelect.loading}
+                  loading={loadingUpdateProfile}
                 >
-                  {false ? '' : 'Cập nhật'}
+                  {loadingUpdateProfile ? '' : 'Cập nhật'}
                 </ButtonCustom>
               </Box>
             </FormProfile>

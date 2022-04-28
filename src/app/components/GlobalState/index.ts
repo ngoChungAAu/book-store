@@ -6,6 +6,8 @@ import { GlobalState, IProfile, ICategory, IProduct } from './types';
 
 export const initialState: GlobalState = {
   user: null,
+  loadingUpdateProfile: false,
+  updateProfileStatus: false,
 
   listCategory: [],
 
@@ -15,7 +17,7 @@ export const initialState: GlobalState = {
     total_item: 0,
     total_page: 0,
 
-    page: 0,
+    page: 1,
     size: 5,
 
     detail: {
@@ -30,6 +32,8 @@ export const initialState: GlobalState = {
       images: [{ link: '' }],
     },
   },
+
+  errorMessage: '',
 };
 
 const slice = createSlice({
@@ -45,6 +49,19 @@ const slice = createSlice({
     outUser(state) {
       localStorage.removeItem('access_token');
       state.user = null;
+    },
+
+    updateProfileRequest(state, action) {
+      state.updateProfileStatus = false;
+      state.loadingUpdateProfile = false;
+    },
+
+    setUpdateStatus(state, action: PayloadAction<boolean>) {
+      state.updateProfileStatus = action.payload;
+    },
+
+    setLoadingUpdateProfile(state, action: PayloadAction<boolean>) {
+      state.loadingUpdateProfile = action.payload;
     },
 
     getCategoryListRequest(state, action) {},
@@ -95,6 +112,10 @@ const slice = createSlice({
       >,
     ) {
       state.product.detail = action.payload;
+    },
+
+    setErrorMessage(state, action: PayloadAction<string>) {
+      state.errorMessage = action.payload;
     },
   },
 });

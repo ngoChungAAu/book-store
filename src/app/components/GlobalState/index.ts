@@ -21,6 +21,7 @@ export const initialState: GlobalState = {
     size: 5,
 
     detail: {
+      id: -1,
       title: '',
       longDescription: '',
       categoryId: -1,
@@ -85,12 +86,14 @@ const slice = createSlice({
         category: string;
         total_item: number;
         total_page: number;
+        current_page: number;
       }>,
     ) {
       state.product.list = action.payload.data;
       state.product.category = action.payload.category;
       state.product.total_item = action.payload.total_item;
       state.product.total_page = action.payload.total_page;
+      state.product.page = action.payload.current_page;
     },
 
     getProductDetailRequest(state, action) {},
@@ -100,6 +103,7 @@ const slice = createSlice({
       action: PayloadAction<
         | IProduct
         | {
+            id: number;
             title: string;
             longDescription: string;
             categoryId: number;

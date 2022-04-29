@@ -17,6 +17,7 @@ export const ItemCartImage = styled(Box)(({ theme }) => ({
   width: '100px',
   display: 'flex',
   alignItems: 'center',
+  cursor: 'pointer',
 
   img: {
     maxWidth: '100%',
@@ -33,6 +34,7 @@ export const ItemCartName = styled(Box)(({ theme }) => ({
   fontSize: '14px',
   lineHeight: '18px',
   fontWeight: 600,
+  cursor: 'pointer',
 }));
 
 export const ItemCartPrice = styled(Box)(({ theme }) => ({
@@ -61,5 +63,22 @@ export const ItemCartNumber = styled(ButtonGroup)(({ theme }) => ({
     padding: '0px',
     border: '1px solid #000',
     color: '#000',
+  },
+
+  '& .active': {
+    '&:hover': {
+      cursor: 'pointer',
+      background: 'rgba(0,239,255,0.55)',
+    },
+  },
+
+  '& .disable': {
+    background: 'rgba(234,231,231,0.9)',
+    border: '1px solid rgba(234,231,231,0.9)',
+    cursor: 'unset',
+
+    '& .MuiSvgIcon-root': {
+      color: '#FFF',
+    },
   },
 }));

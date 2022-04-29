@@ -18,6 +18,7 @@ export interface GlobalState {
     detail:
       | IProduct
       | {
+          id: number;
           title: string;
           longDescription: string;
           categoryId: number;

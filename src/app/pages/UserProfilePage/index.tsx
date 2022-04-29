@@ -17,7 +17,6 @@ import ButtonCustom from 'app/components/ButtonCustom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectGlobal } from 'app/components/GlobalState/selector';
 import { useGlobalSlice } from 'app/components/GlobalState';
-import { fontFamily } from '@mui/system';
 
 interface ProfileForm {
   firstName: string;

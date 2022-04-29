@@ -3,18 +3,43 @@ import { Box, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import Item from 'app/components/Item';
 import _ from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import { useGlobalSlice } from '../GlobalState';
+import { selectGlobal } from '../GlobalState/selector';
 
 interface Props {
   title: string;
-  list: any;
+  categoryId?: number;
+  type?: string;
+  value?: string;
 }
 
 export default function List(props: Props) {
+  const { title, categoryId, type, value } = props;
+
+  const dispatch = useDispatch();
+
+  const { actions: globalActions } = useGlobalSlice();
+
+  const { product } = useSelector(selectGlobal);
+
+  React.useEffect(() => {
+    dispatch(
+      globalActions.getProductListRequest({
+        categoryId,
+        key: type,
+        value,
+        page: 0,
+        size: 4,
+      }),
+    );
+  }, [categoryId, type, value]);
+
   return (
     <ListWrapper>
-      <Typography component="h2">{props.title}</Typography>
+      <Typography component="h2">{title}</Typography>
       <Grid container spacing={8}>
-        {props.list.map((e, i) => (
+        {product.list.map((e, i) => (
           <Grid
             key={i}
             item

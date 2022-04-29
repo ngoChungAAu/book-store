@@ -30,6 +30,8 @@ apiClient.interceptors.response.use(
   error => {
     // Clear local storage data and redirect to login page if request is 401 - Unauthorized
     if (error.response.status === 401) {
+      localStorage.removeItem('access_token');
+      window.location.href = '/login';
     }
 
     return Promise.reject(error);

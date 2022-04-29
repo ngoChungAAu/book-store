@@ -16,8 +16,9 @@ export function HomePage() {
         <Box sx={{ width: '100%' }}>
           <Slide />
           <Feature />
-          {/* <List />
-          <List /> */}
+          <List title="Sách mới" type="filter" value="new" />
+
+          <List title="Sách bán chạy" type="filter" value="hot" />
         </Box>
       </OneColumnLayout>
     </>

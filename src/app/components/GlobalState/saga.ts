@@ -58,6 +58,7 @@ function* handleGetListProduct(action) {
         category: response.data.value,
         total_item: response.data.total_item,
         total_page: response.data.total_page,
+        current_page: response.data.current_page,
       }),
     );
   } catch (error) {
@@ -67,6 +68,7 @@ function* handleGetListProduct(action) {
         category: '',
         total_item: 0,
         total_page: 0,
+        current_page: 0,
       }),
     );
   }
@@ -80,6 +82,7 @@ function* handleGetDetailProduct(action) {
   } catch (error) {
     yield put(
       actions.setDetailProduct({
+        id: -1,
         title: '',
         longDescription: '',
         categoryId: -1,

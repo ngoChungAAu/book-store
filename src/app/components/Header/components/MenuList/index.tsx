@@ -1,21 +1,16 @@
 import { Box, Tooltip } from '@mui/material';
-import { useGlobalSlice } from 'app/components/GlobalState';
 import { selectGlobal } from 'app/components/GlobalState/selector';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function MenuList({ children }) {
   const history = useHistory();
 
-  const dispatch = useDispatch();
-
-  const { actions } = useGlobalSlice();
-
   const { listCategory } = useSelector(selectGlobal);
 
-  const handleRedirect = (id, name) => {
+  const handleRedirect = id => {
     history.push(`/product/${id}`);
   };
   return (
@@ -25,11 +20,9 @@ export default function MenuList({ children }) {
       title={
         <MenuBox>
           {listCategory.map((e, i) => (
-            <>
-              <MenuItem key={i} onClick={() => handleRedirect(e.id, e.name)}>
-                {e.name}
-              </MenuItem>
-            </>
+            <MenuItem onClick={() => handleRedirect(e.id)} key={i}>
+              {e.name}
+            </MenuItem>
           ))}
         </MenuBox>
       }

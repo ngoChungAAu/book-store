@@ -98,14 +98,14 @@ export const InforBox = styled(Box)(({ theme }) => ({
   },
 
   '& .description': {
-    '& p:first-child': {
+    '.descTitle': {
       marginBottom: '10px',
       fontSize: '20px',
       lineHeight: '24px',
       fontWeight: 700,
     },
 
-    '& p:last-child': {
+    '.descContent': {
       padding: '0px 10px',
       textAlign: 'justify',
     },

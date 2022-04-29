@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalSlice } from 'app/components/GlobalState';
 import { selectGlobal } from 'app/components/GlobalState/selector';
 import _ from 'lodash';
+import { useCartSlice } from '../CartPage/slice';
+import { selectCart } from '../CartPage/slice/selector';
 
 export function DetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -22,18 +24,43 @@ export function DetailPage() {
 
   const { actions: globalActions } = useGlobalSlice();
 
+  const { actions: cartActions } = useCartSlice();
+
   const { product } = useSelector(selectGlobal);
 
-  React.useEffect(() => {
-    dispatch(globalActions.getProductDetailRequest(id));
+  const { addStatus } = useSelector(selectCart);
 
+  const handleAddCart = () => {
+    if (product.detail.id > -1) {
+      dispatch(
+        cartActions.addToCartRequest({
+          productId: product.detail.id,
+          quantity: 1,
+        }),
+      );
+    }
+  };
+
+  React.useEffect(() => {
     dispatch(
-      globalActions.getProductListRequest({
-        categoryId: product.detail.categoryId,
-        page: 1,
-        size: 4,
+      globalActions.setDetailProduct({
+        id: -1,
+        title: '',
+        longDescription: '',
+        categoryId: -1,
+        category: '',
+        price: 0,
+        author: '',
+        currentNumber: 0,
+        numberOfPage: 0,
+        quantitySelled: 0,
+        images: [{ link: '' }],
       }),
     );
+
+    dispatch(globalActions.getProductDetailRequest(id));
+
+    window.scrollTo(0, 0);
   }, [id]);
 
   return (
@@ -108,7 +135,9 @@ export function DetailPage() {
                   <Grid item md={6} className="right">
                     <Button
                       variant="contained"
+                      disabled={product.detail.id === -1}
                       startIcon={<AddShoppingCartIcon fontSize="large" />}
+                      onClick={handleAddCart}
                       sx={{
                         fontWeight: 'bold',
                         color: '#000',
@@ -117,12 +146,21 @@ export function DetailPage() {
                     >
                       Thêm vào giỏ hàng
                     </Button>
+                    {addStatus !== '' && (
+                      <Typography component="p" sx={{ mt: '10px' }}>
+                        {addStatus === 'success'
+                          ? 'Thêm vào giỏ hàng thành công!'
+                          : 'Thêm vào giỏ hàng thất bại!'}
+                      </Typography>
+                    )}
                   </Grid>
                 </Grid>
                 <hr />
                 <Box className="description">
-                  <Typography component="p">Giới thiệu sách</Typography>
-                  <Typography component="p">
+                  <Typography component="p" className="descTitle">
+                    Giới thiệu sách
+                  </Typography>
+                  <Typography component="p" className="descContent">
                     {product.detail.longDescription}
                   </Typography>
                 </Box>
@@ -130,7 +168,12 @@ export function DetailPage() {
             </Grid>
           </Grid>
 
-          <List title="Sách cùng chủ đề" list={product.list} />
+          {product.detail.categoryId > -1 && (
+            <List
+              title="Sách cùng chủ đề"
+              categoryId={product.detail.categoryId}
+            />
+          )}
         </DetailPageWrapper>
       </OneColumnLayout>
     </>

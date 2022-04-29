@@ -1,6 +1,6 @@
 import React from 'react';
 import { OneColumnLayout } from 'app/components/Layout';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { TitleList, WrapperList } from './style';
 import SearchList from './components/SearchList';
 import SelectList from './components/SelectList';
@@ -43,6 +43,18 @@ export function ListPage() {
     );
   }, [id, product.page, sort, search]);
 
+  React.useEffect(() => {
+    dispatch(
+      globalActions.setProductData({
+        data: [],
+        category: '',
+        total_item: 0,
+        total_page: 0,
+        current_page: 0,
+      }),
+    );
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -64,28 +76,41 @@ export function ListPage() {
               <SelectList list={listSelect} setValue={setSort} />
             </Box>
 
-            <Grid container spacing={8}>
-              {product.list.map((e, i) => (
-                <Grid
-                  key={i}
-                  item
-                  xs={6}
-                  sm={4}
-                  lg={3}
-                  sx={{ display: 'flex', justifyContent: 'center' }}
-                >
-                  <Item
-                    id={e.id}
-                    image={
-                      !_.isEmpty(e.images[0]?.link) ? e.images[0].link : ''
-                    }
-                    title={e.title}
-                    author={e.author}
-                    price={e.price}
-                  />
-                </Grid>
-              ))}
-            </Grid>
+            {product.list.length > 0 ? (
+              <Grid container spacing={8}>
+                {product.list.map((e, i) => (
+                  <Grid
+                    key={i}
+                    item
+                    xs={6}
+                    sm={4}
+                    lg={3}
+                    sx={{ display: 'flex', justifyContent: 'center' }}
+                  >
+                    <Item
+                      id={e.id}
+                      image={
+                        !_.isEmpty(e.images[0]?.link) ? e.images[0].link : ''
+                      }
+                      title={e.title}
+                      author={e.author}
+                      price={e.price}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            ) : (
+              <Typography
+                component="p"
+                sx={{
+                  textAlign: 'center',
+                  fontSize: '24px',
+                  lineHeight: '27px',
+                }}
+              >
+                Không sản phẩm nào ở danh mục này!
+              </Typography>
+            )}
           </WrapperList>
         </Box>
       </OneColumnLayout>

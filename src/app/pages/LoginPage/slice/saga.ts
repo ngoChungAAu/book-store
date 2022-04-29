@@ -17,6 +17,8 @@ function* handleLogin(action) {
     yield put(actions.loginSuccess());
   } catch (error: any) {
     console.log(error.response);
+    localStorage.removeItem('access_token');
+
     yield put(
       actions.loginFailure(
         isEmpty(error.response.data.message)

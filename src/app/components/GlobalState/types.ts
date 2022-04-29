@@ -21,6 +21,7 @@ export interface GlobalState {
           title: string;
           longDescription: string;
           categoryId: number;
+          category: string;
           price: number;
           author: string;
           currentNumber: number;
@@ -74,6 +75,7 @@ export interface IProduct {
   shortDescription: string | null;
   longDescription: string;
   categoryId: number;
+  category: string;
   price: number;
   author: string;
   currentNumber: number;

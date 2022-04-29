@@ -82,7 +82,8 @@ function* handleGetDetailProduct(action) {
       actions.setDetailProduct({
         title: '',
         longDescription: '',
-        categoryId: 0,
+        categoryId: -1,
+        category: '',
         price: 0,
         author: '',
         currentNumber: 0,

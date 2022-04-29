@@ -39,7 +39,7 @@ export function DetailPage() {
   return (
     <>
       <Helmet>
-        <title>Truyện tranh</title>
+        <title>{product.detail.title}</title>
       </Helmet>
       <OneColumnLayout>
         <DetailPageWrapper>
@@ -47,7 +47,15 @@ export function DetailPage() {
             <BreadcumbItem onClick={() => history.push('/')}>
               Trang chủ
             </BreadcumbItem>{' '}
-            / <BreadcumbItem>Truyện tranh</BreadcumbItem> /{' '}
+            /{' '}
+            <BreadcumbItem
+              onClick={() =>
+                history.push(`/product/${product.detail.categoryId}`)
+              }
+            >
+              {product.detail.category}
+            </BreadcumbItem>{' '}
+            /{' '}
             <BreadcumbItem className="selected">
               {product.detail.title}
             </BreadcumbItem>

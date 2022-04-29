@@ -23,7 +23,8 @@ export const initialState: GlobalState = {
     detail: {
       title: '',
       longDescription: '',
-      categoryId: 0,
+      categoryId: -1,
+      category: '',
       price: 0,
       author: '',
       currentNumber: 0,
@@ -99,15 +100,16 @@ const slice = createSlice({
       action: PayloadAction<
         | IProduct
         | {
-            title: '';
-            longDescription: '';
-            categoryId: 0;
-            price: 0;
-            author: '';
-            currentNumber: 0;
-            numberOfPage: 0;
-            quantitySelled: 0;
-            images: [{ link: '' }];
+            title: string;
+            longDescription: string;
+            categoryId: number;
+            category: string;
+            price: number;
+            author: string;
+            currentNumber: number;
+            numberOfPage: number;
+            quantitySelled: number;
+            images: [{ link: string }];
           }
       >,
     ) {

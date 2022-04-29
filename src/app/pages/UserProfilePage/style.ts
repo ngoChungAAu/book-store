@@ -45,8 +45,8 @@ export const ItemProfile = styled(Box)(({ theme }) => ({
 export const InputProfile = styled(TextField)<TextFieldProps>(({ theme }) => ({
   height: 'auto',
   width: '100%',
-  fontSize: '16px',
-  lineHeight: '15px',
+  fontSize: '14px',
+  lineHeight: '17px',
   fontWeight: 700,
 
   // css for TextField

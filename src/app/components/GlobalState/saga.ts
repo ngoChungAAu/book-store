@@ -23,7 +23,7 @@ function* handleUpdateProfile(action) {
 
     yield put(actions.setUpdateStatus(true));
 
-    yield put(actions.setLoadingUpdateProfile(true));
+    yield put(actions.setLoadingUpdateProfile(false));
   } catch (error) {
     yield put(actions.setErrorMessage('Cập nhật thông tin thất bại!'));
     yield put(actions.setLoadingUpdateProfile(false));

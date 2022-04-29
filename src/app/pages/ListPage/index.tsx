@@ -35,8 +35,8 @@ export function ListPage() {
     dispatch(
       globalActions.getProductListRequest({
         categoryId: id,
-        key: 'title',
-        value: `${search}___${sort}`,
+        key: search.trim().length > 0 ? 'title' : 'filter',
+        value: search.trim().length > 0 ? `${search}___${sort}` : `${sort}`,
         page: product.page,
         size: product.size,
       }),
@@ -46,11 +46,11 @@ export function ListPage() {
   return (
     <>
       <Helmet>
-        <title>{'Truyện tranh'}</title>
+        <title>{product.category}</title>
       </Helmet>
       <OneColumnLayout>
         <Box sx={{ mt: '50px' }}>
-          <TitleList>{'Truyện tranh'}</TitleList>
+          <TitleList>{product.category}</TitleList>
           <WrapperList>
             <Box
               sx={{

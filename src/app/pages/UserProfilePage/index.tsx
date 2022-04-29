@@ -46,7 +46,7 @@ export function UserProfilePage() {
       .string()
       .required('Không thể bỏ trống!')
       .matches(
-        /(03|05|07|08|09|01[2|6|8|9])+([0-9]{7})\b/,
+        /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/,
         'Sai định dạng SĐT!',
       ),
     address: yup.string().required('Không thể bỏ trống!'),
@@ -64,7 +64,22 @@ export function UserProfilePage() {
 
   const { actions } = useGlobalSlice();
 
-  const onSubmit = (data: ProfileForm) => {};
+  const onSubmit = (data: ProfileForm) => {
+    dispatch(
+      actions.updateProfileRequest({
+        id: user?.id,
+        data: {
+          address: data.address,
+          amount: 0,
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          role: user?.role,
+        },
+      }),
+    );
+  };
 
   React.useEffect(() => {
     if (user === null) {

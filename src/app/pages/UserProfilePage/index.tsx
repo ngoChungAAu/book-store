@@ -17,6 +17,7 @@ import ButtonCustom from 'app/components/ButtonCustom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectGlobal } from 'app/components/GlobalState/selector';
 import { useGlobalSlice } from 'app/components/GlobalState';
+import Alert from 'app/components/Alert';
 
 interface ProfileForm {
   firstName: string;
@@ -210,6 +211,16 @@ export function UserProfilePage() {
           </BottomProfile>
         </Box>
       </OneColumnLayout>
+
+      {updateProfileStatus && (
+        <Alert
+          type="success"
+          text="Cập nhật thông tin thành công!"
+          isOpen={updateProfileStatus}
+          handle={() => dispatch(actions.setUser(null))}
+          onClose={() => dispatch(actions.setUpdateStatus(false))}
+        />
+      )}
     </>
   );
 }

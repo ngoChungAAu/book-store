@@ -67,7 +67,7 @@ export default function CartItem(props: Props) {
   };
 
   const handleOnClick = () => {
-    history.push(`/product/${product_id}`);
+    history.push(`/product-detail/${product_id}`);
   };
 
   React.useEffect(() => {

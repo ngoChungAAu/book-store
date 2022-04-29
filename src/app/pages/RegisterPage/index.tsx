@@ -20,6 +20,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import Alert from 'app/components/Alert';
 
 interface RegisterForm {
   firstName: string;
@@ -298,6 +299,16 @@ export function RegisterPage() {
           </RegisterBox>
         </RegisterPageWrapper>
       </OneColumnLayout>
+
+      {registerSelect.success && (
+        <Alert
+          type="success"
+          text="Đăng ký tài khoản thành công!"
+          handle={() => history.push('/login')}
+          isOpen={registerSelect.success}
+          onClose={() => dispatch(actions.resetRegister())}
+        />
+      )}
     </>
   );
 }

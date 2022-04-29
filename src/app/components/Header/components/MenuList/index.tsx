@@ -11,7 +11,7 @@ export default function MenuList({ children }) {
   const { listCategory } = useSelector(selectGlobal);
 
   const handleRedirect = id => {
-    history.push(`/product/${id}`);
+    history.push(`/product-list/${id}`);
   };
   return (
     <Tooltip

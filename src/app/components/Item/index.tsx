@@ -15,7 +15,7 @@ interface Props {
 export default function Item(props: Props) {
   const history = useHistory();
 
-  const handleToDo = () => history.push(`/detail/${props.id}`);
+  const handleToDo = () => history.push(`/product-detail/${props.id}`);
 
   return (
     <ItemWrapper onClick={handleToDo}>

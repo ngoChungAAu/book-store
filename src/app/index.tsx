@@ -21,6 +21,7 @@ import { HomePage } from 'app/pages/HomePage/Loadable';
 import { UserProfilePage } from 'app/pages/UserProfilePage/Loadable';
 import { RegisterPage } from 'app/pages/RegisterPage/Loadable';
 import { LoginPage } from 'app/pages/LoginPage/Loadable';
+import { SearchPage } from './pages/SearchPage/Loadable';
 import { ListPage } from 'app/pages/ListPage/Loadable';
 import { DetailPage } from 'app/pages/DetailPage/Loadable';
 import { CartPage } from 'app/pages/CartPage/Loadable';
@@ -59,8 +60,9 @@ export function App() {
           <PublicRoute exact path="/register" component={RegisterPage} />
           <PublicRoute exact path="/login" component={LoginPage} />
           <ProtectedRoute exact path="/profile" component={UserProfilePage} />
-          <Route exact path="/product/:id" component={ListPage} />
-          <Route exact path="/detail/:id" component={DetailPage} />
+          <Route exact path="/search" component={SearchPage} />
+          <Route exact path="/product-list/:id" component={ListPage} />
+          <Route exact path="/product-detail/:id" component={DetailPage} />
           <Route exact path="/cart" component={CartPage} />
           <Route exact path="/buy" component={BuyPage} />
           <Route component={NotFoundPage} />

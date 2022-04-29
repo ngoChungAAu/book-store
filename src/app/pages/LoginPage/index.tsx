@@ -66,12 +66,8 @@ export function LoginPage() {
       history.push('/');
     }
     switch (loginSelect.errorMessage) {
-      case 'Username is invalid':
-        setMessageError('Sai tài khoản!');
-        break;
-
-      case 'Password is invalid':
-        setMessageError('Sai mật khẩu!');
+      case 'INVALID_CREDENTIALS':
+        setMessageError('Sai tài khoản  hoặc mật khẩu!');
         break;
 
       default:

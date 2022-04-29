@@ -77,7 +77,7 @@ export function DetailPage() {
             /{' '}
             <BreadcumbItem
               onClick={() =>
-                history.push(`/product/${product.detail.categoryId}`)
+                history.push(`/product-list/${product.detail.categoryId}`)
               }
             >
               {product.detail.category}

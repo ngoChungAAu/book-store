@@ -68,7 +68,7 @@ export function DetailPage() {
     dispatch(globalActions.getProductDetailRequest(id));
 
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -76,7 +76,7 @@ export function DetailPage() {
         dispatch(cartActions.setAddStatus(''));
       }
     }, 1000);
-  }, [addStatus]);
+  }, [addStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

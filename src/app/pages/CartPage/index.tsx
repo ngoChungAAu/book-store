@@ -67,7 +67,7 @@ export function CartPage() {
                     </span>
                   </Box>
                   <ButtonCustom variant="contained" onClick={onHandle}>
-                    Xác nhận đặt hàng
+                    Đặt hàng
                   </ButtonCustom>
                 </CartButton>
               </Box>

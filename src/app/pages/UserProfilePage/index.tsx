@@ -46,7 +46,7 @@ export function UserProfilePage() {
       .string()
       .required('Không thể bỏ trống!')
       .matches(
-        /(03|05|07|08|09|01[2|6|8|9])+([0-9]{7})\b/,
+        /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/,
         'Sai định dạng SĐT!',
       ),
     address: yup.string().required('Không thể bỏ trống!'),
@@ -93,7 +93,7 @@ export function UserProfilePage() {
         address: user.address || '',
       });
     }
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

@@ -4,6 +4,9 @@ export interface CartState {
 
   addStatus: string;
   removeStatus: string;
+
+  loadingPayment: boolean;
+  paymentStatus: string;
 }
 
 interface OrderItem {

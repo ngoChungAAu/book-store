@@ -36,6 +36,16 @@ function* handleRemove(action) {
   }
 }
 
+function* handlePayment(action) {
+  try {
+    yield call(cartService.paymentCart, action.payload);
+
+    yield put(actions.setPaymentStatus('success'));
+  } catch (error) {
+    yield put(actions.setPaymentStatus('error'));
+  }
+}
+
 export function* watchHandleGetList() {
   yield takeLatest(actions.getCurrentCart.type, handleGetList);
 }
@@ -48,6 +58,15 @@ export function* watchHandleRemove() {
   yield takeLatest(actions.removeFromCartRequest.type, handleRemove);
 }
 
+export function* watchHandlePayment() {
+  yield takeLatest(actions.paymentCartRequest.type, handlePayment);
+}
+
 export default function* cartSaga() {
-  yield all([watchHandleGetList(), watchHandleAdd(), watchHandleRemove()]);
+  yield all([
+    watchHandleGetList(),
+    watchHandleAdd(),
+    watchHandleRemove(),
+    watchHandlePayment(),
+  ]);
 }

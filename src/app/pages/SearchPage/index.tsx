@@ -3,7 +3,6 @@ import { OneColumnLayout } from 'app/components/Layout';
 import { Box, Grid, Typography } from '@mui/material';
 import Item from 'app/components/Item';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalSlice } from 'app/components/GlobalState';
 import { selectGlobal } from 'app/components/GlobalState/selector';
@@ -28,7 +27,7 @@ export function SearchPage() {
         value: keywords,
       }),
     );
-  }, [keywords]);
+  }, [keywords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

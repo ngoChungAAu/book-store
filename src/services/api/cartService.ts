@@ -23,4 +23,12 @@ export const cartService = {
       url: 'saleOrder/current',
     });
   },
+
+  paymentCart(data) {
+    return apiClient.request({
+      method: 'POST',
+      url: 'saleOrder/payment',
+      data,
+    });
+  },
 };

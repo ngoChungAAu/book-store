@@ -52,7 +52,7 @@ export function App() {
     }
 
     dispatch(actions.getCategoryListRequest({ page: '', size: '' }));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     if (!localStorage.getItem('access_token')) {
@@ -62,7 +62,7 @@ export function App() {
     if (addStatus === 'success' || removeStatus === 'success') {
       dispatch(cartActions.getCurrentCart());
     }
-  }, [addStatus, removeStatus]);
+  }, [addStatus, removeStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <BrowserRouter>

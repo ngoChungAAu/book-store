@@ -78,11 +78,11 @@ export function LoginPage() {
         setMessageError('Đăng nhập thất bại!');
         break;
     }
-  }, [loginSelect.success, loginSelect.fail, loginSelect.errorMessage]);
+  }, [loginSelect.success, loginSelect.fail, loginSelect.errorMessage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     dispatch(actions.resetLogin());
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

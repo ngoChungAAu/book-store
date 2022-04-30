@@ -9,6 +9,9 @@ export const initialState: CartState = {
 
   addStatus: '',
   removeStatus: '',
+
+  loadingPayment: false,
+  paymentStatus: '',
 };
 
 const slice = createSlice({
@@ -37,6 +40,19 @@ const slice = createSlice({
 
     setRemoveStatus(state, action: PayloadAction<string>) {
       state.removeStatus = action.payload;
+    },
+
+    paymentCartRequest(state, action) {
+      state.loadingPayment = false;
+      state.paymentStatus = '';
+    },
+
+    setLoadingPayment(state, action: PayloadAction<boolean>) {
+      state.loadingPayment = action.payload;
+    },
+
+    setPaymentStatus(state, action: PayloadAction<string>) {
+      state.paymentStatus = action.payload;
     },
   },
 });

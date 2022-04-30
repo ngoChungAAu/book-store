@@ -33,7 +33,7 @@ export default function List(props: Props) {
         size: 4,
       }),
     );
-  }, [categoryId, type, value]);
+  }, [categoryId, type, value]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ListWrapper>

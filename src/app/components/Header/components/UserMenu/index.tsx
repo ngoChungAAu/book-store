@@ -67,12 +67,12 @@ export default function UserMenu() {
       >
         <MenuUserItemStyle onClick={() => history.push('/profile')}>
           <img src={UserProfile} alt="User Profile" />
-          <Box>User profile</Box>
+          <Box>Tài khoản</Box>
         </MenuUserItemStyle>
 
         <MenuUserItemStyle onClick={handleLogout}>
           <img src={Logout} alt="Logout" />
-          <Box>Log out</Box>
+          <Box>Đăng xuất</Box>
         </MenuUserItemStyle>
       </Menu>
     </>

@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/system';
-import Sach1 from './images/sach2.png';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 

@@ -41,7 +41,7 @@ export function ListPage() {
         size: product.size,
       }),
     );
-  }, [id, product.page, sort, search]);
+  }, [id, product.page, sort, search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
     dispatch(
@@ -53,7 +53,7 @@ export function ListPage() {
         current_page: 0,
       }),
     );
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

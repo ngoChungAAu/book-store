@@ -21,6 +21,8 @@ import { useCartSlice } from '../CartPage/slice';
 import { useGlobalSlice } from 'app/components/GlobalState';
 import { selectCart } from '../CartPage/slice/selector';
 import { selectGlobal } from 'app/components/GlobalState/selector';
+import Alert from 'app/components/Alert';
+import { useHistory } from 'react-router-dom';
 
 interface InforForm {
   firstName: string;
@@ -43,7 +45,7 @@ export function BuyPage() {
       .string()
       .required('Không thể bỏ trống!')
       .matches(
-        /(03|05|07|08|09|01[2|6|8|9])+([0-9]{7})\b/,
+        /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/,
         'Sai định dạng SĐT!',
       ),
     address: yup.string().required('Không thể bỏ trống!'),
@@ -54,17 +56,28 @@ export function BuyPage() {
     resolver: yupResolver(schema),
   });
 
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const { actions: cartActions } = useCartSlice();
 
   const { actions: globalActions } = useGlobalSlice();
 
-  const { detailCart } = useSelector(selectCart);
+  const { detailCart, loadingPayment, paymentStatus } = useSelector(selectCart);
 
   const { user } = useSelector(selectGlobal);
 
-  const onSubmit = (data: InforForm) => {};
+  const onSubmit = (data: InforForm) => {
+    dispatch(
+      cartActions.paymentCartRequest({
+        address: data.address,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+      }),
+    );
+  };
 
   React.useEffect(() => {
     if (user === null) {
@@ -77,7 +90,7 @@ export function BuyPage() {
         address: user.address || '',
       });
     }
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -210,7 +223,7 @@ export function BuyPage() {
                   gap: '20px',
                 }}
               >
-                {false && (
+                {paymentStatus === 'error' && (
                   <Typography
                     sx={{
                       color: '#F04F5B',
@@ -224,15 +237,25 @@ export function BuyPage() {
                 <ButtonCustom
                   type="submit"
                   variant="contained"
-                  // loading={registerSelect.loading}
+                  loading={loadingPayment}
                 >
-                  {false ? '' : 'Đặt hàng'}
+                  {loadingPayment ? '' : 'Đặt hàng ngay!'}
                 </ButtonCustom>
               </Box>
             </FormBuy>
           </BottomBuy>
         </Box>
       </OneColumnLayout>
+
+      {paymentStatus !== '' && (
+        <Alert
+          type="success"
+          text="Đặt hàng thành công!"
+          isOpen={paymentStatus === 'success'}
+          handle={() => history.push('/')}
+          onClose={() => dispatch(cartActions.setPaymentStatus(''))}
+        />
+      )}
     </>
   );
 }

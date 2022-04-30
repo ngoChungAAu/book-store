@@ -49,4 +49,6 @@ export const CartButton = styled(Box)(({ theme }) => ({
   width: '980px',
   display: 'flex',
   justifyContent: 'flex-end',
+  alignItems: 'center',
+  gap: '20px',
 }));

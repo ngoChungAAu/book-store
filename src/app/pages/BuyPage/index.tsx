@@ -16,6 +16,11 @@ import ButtonCustom from 'app/components/ButtonCustom';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCartSlice } from '../CartPage/slice';
+import { useGlobalSlice } from 'app/components/GlobalState';
+import { selectCart } from '../CartPage/slice/selector';
+import { selectGlobal } from 'app/components/GlobalState/selector';
 
 interface InforForm {
   firstName: string;
@@ -49,7 +54,30 @@ export function BuyPage() {
     resolver: yupResolver(schema),
   });
 
+  const dispatch = useDispatch();
+
+  const { actions: cartActions } = useCartSlice();
+
+  const { actions: globalActions } = useGlobalSlice();
+
+  const { detailCart } = useSelector(selectCart);
+
+  const { user } = useSelector(selectGlobal);
+
   const onSubmit = (data: InforForm) => {};
+
+  React.useEffect(() => {
+    if (user === null) {
+      dispatch(globalActions.getUserProfileRequest());
+    } else {
+      form.reset({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        phone: user.phone || '',
+        address: user.address || '',
+      });
+    }
+  }, [user]);
 
   return (
     <>
@@ -78,19 +106,40 @@ export function BuyPage() {
             </Box>
             <BuyListItem>
               <Box className="inner_list">
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
-                <ItemBuy />
+                {detailCart.orderItems.map((e, i) => (
+                  <ItemBuy
+                    productID={e.product.id}
+                    image={e.product.product_images[0].imageUrl}
+                    title={e.product.title}
+                    price={e.product.price}
+                    quantity={e.quantity}
+                    key={i}
+                  />
+                ))}
               </Box>
             </BuyListItem>
+
+            <Typography
+              component="p"
+              sx={{
+                mt: '15px',
+                pr: '20px',
+                width: '600px',
+                textAlign: 'right',
+              }}
+            >
+              Tổng tiền:{' '}
+              <span
+                style={{
+                  fontSize: '18px',
+                  lineHeight: '24px',
+                  fontWeight: 600,
+                  color: '#F04F5B',
+                }}
+              >
+                {detailCart.totalPrice.toLocaleString('en-US')} VNĐ
+              </span>
+            </Typography>
 
             <FormBuy onSubmit={form.handleSubmit(onSubmit)}>
               <Box
@@ -108,7 +157,7 @@ export function BuyPage() {
                 <InputBuy
                   {...form.register('lastName')}
                   type="text"
-                  defaultValue="Âu"
+                  defaultValue={user?.lastName}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.lastName)}
@@ -120,7 +169,7 @@ export function BuyPage() {
                 <InputBuy
                   {...form.register('firstName')}
                   type="text"
-                  defaultValue="Ngô"
+                  defaultValue={user?.firstName}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.firstName)}
@@ -132,7 +181,7 @@ export function BuyPage() {
                 <InputBuy
                   {...form.register('phone')}
                   type="text"
-                  defaultValue="033454578"
+                  defaultValue={user?.phone}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.phone)}
@@ -145,7 +194,7 @@ export function BuyPage() {
                 <InputBuy
                   {...form.register('address')}
                   type="text"
-                  defaultValue="Hà Nội"
+                  defaultValue={user?.address}
                   fullWidth
                   autoComplete="off"
                   error={Boolean(form.formState.errors.address)}
@@ -161,7 +210,7 @@ export function BuyPage() {
                   gap: '20px',
                 }}
               >
-                {true && (
+                {false && (
                   <Typography
                     sx={{
                       color: '#F04F5B',

@@ -91,9 +91,6 @@ export const InforBox = styled(Box)(({ theme }) => ({
 
     '& .right': {
       padding: '0px 10px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
     },
   },
 

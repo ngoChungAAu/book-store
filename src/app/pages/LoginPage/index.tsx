@@ -15,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useLoginSlice } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLogin } from './slice/selector';
+import { selectGlobal } from 'app/components/GlobalState/selector';
 import ButtonCustom from 'app/components/ButtonCustom';
 import { useHistory } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
@@ -44,7 +45,10 @@ export function LoginPage() {
   const [show, setShow] = React.useState<boolean>(false);
 
   const { actions } = useLoginSlice();
+
   const loginSelect = useSelector(selectLogin);
+
+  const { pathName } = useSelector(selectGlobal);
 
   const onSubmit = (data: LoginForm) => {
     setMessageError('');
@@ -63,7 +67,7 @@ export function LoginPage() {
 
   React.useEffect(() => {
     if (loginSelect.success) {
-      history.push('/');
+      history.push(`${pathName}`);
     }
     switch (loginSelect.errorMessage) {
       case 'INVALID_CREDENTIALS':

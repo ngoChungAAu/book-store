@@ -31,7 +31,7 @@ export const BottomBuy = styled(Box)(({ theme }) => ({
 export const BuyListItem = styled(Box)(({ theme }) => ({
   padding: '20px 0px',
   width: '600px',
-  height: '260px',
+  height: '320px',
   border: '1px solid #51BF29',
   borderRadius: '30px',
 

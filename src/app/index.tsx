@@ -28,8 +28,10 @@ import { CartPage } from 'app/pages/CartPage/Loadable';
 import { BuyPage } from 'app/pages/BuyPage/Loadable';
 import PublicRoute from 'app/components/PublicRoute';
 import { useGlobalSlice } from 'app/components/GlobalState';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useCartSlice } from './pages/CartPage/slice';
+import { selectCart } from './pages/CartPage/slice/selector';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -38,13 +40,29 @@ export function App() {
 
   const { actions } = useGlobalSlice();
 
+  const { actions: cartActions } = useCartSlice();
+
+  const { addStatus, removeStatus } = useSelector(selectCart);
+
   React.useEffect(() => {
     if (localStorage.getItem('access_token')) {
       dispatch(actions.getUserProfileRequest());
+
+      dispatch(cartActions.getCurrentCart());
     }
 
     dispatch(actions.getCategoryListRequest({ page: '', size: '' }));
   }, []);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem('access_token')) {
+      return;
+    }
+
+    if (addStatus === 'success' || removeStatus === 'success') {
+      dispatch(cartActions.getCurrentCart());
+    }
+  }, [addStatus, removeStatus]);
 
   return (
     <BrowserRouter>
@@ -63,8 +81,8 @@ export function App() {
           <Route exact path="/search" component={SearchPage} />
           <Route exact path="/product-list/:id" component={ListPage} />
           <Route exact path="/product-detail/:id" component={DetailPage} />
-          <Route exact path="/cart" component={CartPage} />
-          <Route exact path="/buy" component={BuyPage} />
+          <ProtectedRoute exact path="/cart" component={CartPage} />
+          <ProtectedRoute exact path="/buy" component={BuyPage} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

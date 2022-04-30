@@ -6,24 +6,33 @@ import {
   ItemBuyWrapper,
 } from './style';
 import { Box, Typography } from '@mui/material';
-import image from './assets/ImageDetail.png';
+import { useHistory } from 'react-router-dom';
 
-export default function ItemBuy() {
+interface Props {
+  productID: number;
+  image: string;
+  title: string;
+  price: number;
+  quantity: number;
+}
+
+export default function ItemBuy(props: Props) {
+  const { productID, image, title, price, quantity } = props;
+
+  const history = useHistory();
+
+  const onHandle = () => history.push(`/product-detail/${productID}`);
+
   return (
-    <ItemBuyWrapper>
+    <ItemBuyWrapper onClick={onHandle} sx={{ cursor: 'pointer' }}>
       <ItemBuyImage>
         <img src={image} alt="img" />
       </ItemBuyImage>
       <Box>
-        <ItemBuyName>
-          Tranh truyện dân gian Việt Nam - Lý Ông Trọng Tranh truyện dân gian
-          height: '100%'
-        </ItemBuyName>
+        <ItemBuyName>{title}</ItemBuyName>
         <Box sx={{ display: 'flex', gap: '10px' }}>
-          <ItemBuyPrice>
-            {Number('18000000').toLocaleString('en-US')} VNĐ
-          </ItemBuyPrice>
-          <Typography component="p">x3</Typography>
+          <ItemBuyPrice>{price.toLocaleString('en-US')} VNĐ</ItemBuyPrice>
+          <Typography component="p">x{quantity}</Typography>
         </Box>
       </Box>
     </ItemBuyWrapper>

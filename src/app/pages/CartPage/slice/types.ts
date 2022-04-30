@@ -1,7 +1,6 @@
 /* --- STATE --- */
 export interface CartState {
-  detailCart: { orderItems: OrderItem[] };
-  quantity: number;
+  detailCart: { orderItems: OrderItem[]; total: number; totalPrice: number };
 
   addStatus: string;
   removeStatus: string;
@@ -18,4 +17,5 @@ interface Product {
   title: string;
   price: number;
   product_images: [{ imageUrl: string }];
+  current_number: number;
 }

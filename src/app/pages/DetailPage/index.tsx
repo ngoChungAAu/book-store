@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet-async';
 import { BreadcumbItem, DetailPageWrapper, ImageBox, InforBox } from './style';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import image from './assets/ImageDetail.png';
 import List from 'app/components/List';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,12 +25,20 @@ export function DetailPage() {
 
   const { actions: cartActions } = useCartSlice();
 
-  const { product } = useSelector(selectGlobal);
+  const { product, user } = useSelector(selectGlobal);
 
-  const { addStatus } = useSelector(selectCart);
+  const { detailCart, addStatus } = useSelector(selectCart);
+
+  const isBooked = detailCart.orderItems
+    .map(e => e.product.id)
+    .includes(product.detail.id);
 
   const handleAddCart = () => {
-    if (product.detail.id > -1) {
+    if (product.detail.currentNumber === 1 && isBooked) {
+      return;
+    }
+
+    if (product.detail.id > -1 && product.detail.currentNumber >= 1) {
       dispatch(
         cartActions.addToCartRequest({
           productId: product.detail.id,
@@ -62,6 +69,14 @@ export function DetailPage() {
 
     window.scrollTo(0, 0);
   }, [id]);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      if (addStatus) {
+        dispatch(cartActions.setAddStatus(''));
+      }
+    }, 1000);
+  }, [addStatus]);
 
   return (
     <>
@@ -133,26 +148,62 @@ export function DetailPage() {
                     </Typography>
                   </Grid>
                   <Grid item md={6} className="right">
-                    <Button
-                      variant="contained"
-                      disabled={product.detail.id === -1}
-                      startIcon={<AddShoppingCartIcon fontSize="large" />}
-                      onClick={handleAddCart}
+                    <Box
                       sx={{
-                        fontWeight: 'bold',
-                        color: '#000',
-                        padding: '10px 20px',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}
                     >
-                      Thêm vào giỏ hàng
-                    </Button>
-                    {addStatus !== '' && (
-                      <Typography component="p" sx={{ mt: '10px' }}>
-                        {addStatus === 'success'
-                          ? 'Thêm vào giỏ hàng thành công!'
-                          : 'Thêm vào giỏ hàng thất bại!'}
-                      </Typography>
-                    )}
+                      <Button
+                        variant="contained"
+                        disabled={
+                          user === null ||
+                          product.detail.id === -1 ||
+                          product.detail.currentNumber === 0 ||
+                          (product.detail.currentNumber === 1 && isBooked)
+                        }
+                        startIcon={<AddShoppingCartIcon fontSize="large" />}
+                        onClick={handleAddCart}
+                        sx={{
+                          fontWeight: 'bold',
+                          color: '#000',
+                          padding: '10px 20px',
+                        }}
+                      >
+                        Thêm vào giỏ hàng
+                      </Button>
+
+                      {user === null && (
+                        <Typography
+                          component="p"
+                          sx={{
+                            mt: '10px',
+                            color: 'red',
+                          }}
+                        >
+                          Đăng nhập để mua hàng!
+                        </Typography>
+                      )}
+
+                      {addStatus !== '' && (
+                        <Typography
+                          component="p"
+                          sx={{
+                            mt: '10px',
+                            color: `${
+                              addStatus === 'success' ? '#28CE7E' : 'red'
+                            }`,
+                          }}
+                        >
+                          {addStatus === 'success'
+                            ? 'Thêm vào giỏ hàng thành công!'
+                            : 'Thêm vào giỏ hàng thất bại!'}
+                        </Typography>
+                      )}
+                    </Box>
                   </Grid>
                 </Grid>
                 <hr />

@@ -71,6 +71,8 @@ function* handleGetListProduct(action) {
         current_page: 0,
       }),
     );
+
+    yield put(actions.setErrorMessage('Lỗi! Không hiển thị danh sách!'));
   }
 }
 

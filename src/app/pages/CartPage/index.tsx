@@ -6,20 +6,18 @@ import { BottomCart, CartButton, CartTableWrapper, TopCart } from './style';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import ItemCart from '../../components/ItemCart';
 import ButtonCustom from 'app/components/ButtonCustom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useCartSlice } from './slice';
+import { useSelector } from 'react-redux';
 import { selectCart } from './slice/selector';
+import { useHistory } from 'react-router-dom';
 
 export function CartPage() {
-  const dispatch = useDispatch();
-
-  const { actions } = useCartSlice();
+  const history = useHistory();
 
   const { detailCart } = useSelector(selectCart);
 
-  React.useEffect(() => {
-    dispatch(actions.getCurrentCart());
-  }, []);
+  const onHandle = () => {
+    history.push('/buy');
+  };
 
   return (
     <>
@@ -44,18 +42,33 @@ export function CartPage() {
                 <CartTableWrapper>
                   {detailCart.orderItems.map((e, i) => (
                     <ItemCart
-                      order_id={e.id}
                       product_id={e.product.id}
                       image={e.product.product_images[0].imageUrl}
                       title={e.product.title}
                       price={e.product.price}
                       numb={e.quantity}
+                      current={e.product.current_number}
                       key={i}
                     />
                   ))}
                 </CartTableWrapper>
                 <CartButton>
-                  <ButtonCustom variant="contained">Mua hàng</ButtonCustom>
+                  <Box>
+                    Tổng tiền:{' '}
+                    <span
+                      style={{
+                        fontSize: '18px',
+                        lineHeight: '24px',
+                        fontWeight: 600,
+                        color: '#F04F5B',
+                      }}
+                    >
+                      {detailCart.totalPrice.toLocaleString('en-US')} VNĐ
+                    </span>
+                  </Box>
+                  <ButtonCustom variant="contained" onClick={onHandle}>
+                    Xác nhận đặt hàng
+                  </ButtonCustom>
                 </CartButton>
               </Box>
             )}

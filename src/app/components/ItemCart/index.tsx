@@ -10,22 +10,21 @@ import { Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import CloseIcon from '@mui/icons-material/Close';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useCartSlice } from 'app/pages/CartPage/slice';
 import { useHistory } from 'react-router-dom';
-import { selectCart } from 'app/pages/CartPage/slice/selector';
 
 interface Props {
-  order_id: number;
   product_id: number;
   image: string;
   title: string;
   price: number;
   numb: number;
+  current: number;
 }
 
 export default function CartItem(props: Props) {
-  const { order_id, product_id, image, title, price, numb } = props;
+  const { product_id, image, title, price, numb, current } = props;
 
   const history = useHistory();
 
@@ -33,21 +32,19 @@ export default function CartItem(props: Props) {
 
   const { actions } = useCartSlice();
 
-  const { quantity } = useSelector(selectCart);
-
   const handleAdd = () => {
-    dispatch(actions.setQuantity(quantity + 1));
-    dispatch(
-      actions.addToCartRequest({
-        productId: product_id,
-        quantity: 1,
-      }),
-    );
+    if (numb >= current) {
+      dispatch(
+        actions.addToCartRequest({
+          productId: product_id,
+          quantity: 1,
+        }),
+      );
+    }
   };
 
   const handleRemove = () => {
-    if (quantity > 1) {
-      dispatch(actions.setQuantity(quantity - 1));
+    if (numb > 1) {
       dispatch(
         actions.removeFromCartRequest({
           productId: product_id,
@@ -61,7 +58,7 @@ export default function CartItem(props: Props) {
     dispatch(
       actions.removeFromCartRequest({
         productId: product_id,
-        quantity,
+        quantity: numb,
       }),
     );
   };
@@ -69,10 +66,6 @@ export default function CartItem(props: Props) {
   const handleOnClick = () => {
     history.push(`/product-detail/${product_id}`);
   };
-
-  React.useEffect(() => {
-    dispatch(actions.setQuantity(numb));
-  }, []);
 
   return (
     <ItemCartWrapper>
@@ -82,14 +75,14 @@ export default function CartItem(props: Props) {
       <ItemCartName onClick={handleOnClick}>{title}</ItemCartName>
       <ItemCartPrice>{price.toLocaleString('en-US')}</ItemCartPrice>
       <ItemCartNumber>
-        <Box
-          onClick={handleRemove}
-          className={quantity > 1 ? 'active' : 'disable'}
-        >
+        <Box onClick={handleRemove} className={numb > 1 ? 'active' : 'disable'}>
           <RemoveIcon fontSize="small" />
         </Box>
-        <Box>{quantity}</Box>
-        <Box onClick={handleAdd} className="active">
+        <Box>{numb}</Box>
+        <Box
+          onClick={handleAdd}
+          className={numb < current ? 'active' : 'disable'}
+        >
           <AddIcon fontSize="small" />
         </Box>
       </ItemCartNumber>

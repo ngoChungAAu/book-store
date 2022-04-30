@@ -5,8 +5,7 @@ import cartSaga from './saga';
 import { CartState } from './types';
 
 export const initialState: CartState = {
-  detailCart: { orderItems: [] },
-  quantity: 1,
+  detailCart: { orderItems: [], total: 0, totalPrice: 0 },
 
   addStatus: '',
   removeStatus: '',
@@ -19,11 +18,9 @@ const slice = createSlice({
     getCurrentCart(state) {},
 
     setDetailCart(state, action) {
-      state.detailCart.orderItems = action.payload;
-    },
-
-    setQuantity(state, action: PayloadAction<number>) {
-      state.quantity = action.payload;
+      state.detailCart.orderItems = action.payload.orderItems;
+      state.detailCart.total = action.payload.total;
+      state.detailCart.totalPrice = action.payload.totalPrice;
     },
 
     addToCartRequest(state, action) {
@@ -34,7 +31,9 @@ const slice = createSlice({
       state.addStatus = action.payload;
     },
 
-    removeFromCartRequest(state, action) {},
+    removeFromCartRequest(state, action) {
+      state.removeStatus = '';
+    },
 
     setRemoveStatus(state, action: PayloadAction<string>) {
       state.removeStatus = action.payload;

@@ -6,7 +6,13 @@ function* handleGetList() {
   try {
     const response = yield call(cartService.getCurrentCart);
 
-    yield put(actions.setDetailCart(response.data.item.orderItems));
+    yield put(
+      actions.setDetailCart({
+        orderItems: response.data.item.orderItems,
+        total: response.data.item.total,
+        totalPrice: response.data.item.totalPrice,
+      }),
+    );
   } catch (error: any) {}
 }
 

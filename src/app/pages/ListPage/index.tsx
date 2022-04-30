@@ -26,7 +26,7 @@ export function ListPage() {
 
   const { actions: globalActions } = useGlobalSlice();
 
-  const { product } = useSelector(selectGlobal);
+  const { product, errorMessage } = useSelector(selectGlobal);
 
   const [sort, setSort] = React.useState('new');
   const [search, setSearch] = React.useState('');
@@ -76,7 +76,19 @@ export function ListPage() {
               <SelectList list={listSelect} setValue={setSort} />
             </Box>
 
-            {product.list.length > 0 ? (
+            {product.list.length === 0 &&
+            errorMessage === 'Lỗi! Không hiển thị danh sách!' ? (
+              <Typography
+                component="p"
+                sx={{
+                  textAlign: 'center',
+                  fontSize: '24px',
+                  lineHeight: '27px',
+                }}
+              >
+                {errorMessage}
+              </Typography>
+            ) : product.list.length > 0 ? (
               <Grid container spacing={8}>
                 {product.list.map((e, i) => (
                   <Grid
@@ -108,7 +120,7 @@ export function ListPage() {
                   lineHeight: '27px',
                 }}
               >
-                Không sản phẩm nào ở danh mục này!
+                Không có sản phẩm nào ở danh mục này!
               </Typography>
             )}
           </WrapperList>

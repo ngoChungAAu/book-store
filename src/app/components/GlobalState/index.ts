@@ -36,6 +36,8 @@ export const initialState: GlobalState = {
   },
 
   errorMessage: '',
+
+  pathName: '/',
 };
 
 const slice = createSlice({
@@ -122,6 +124,10 @@ const slice = createSlice({
 
     setErrorMessage(state, action: PayloadAction<string>) {
       state.errorMessage = action.payload;
+    },
+
+    setPathName(state, action: PayloadAction<string>) {
+      state.pathName = action.payload;
     },
   },
 });

@@ -33,6 +33,8 @@ export interface GlobalState {
   };
 
   errorMessage: string;
+
+  pathName: string;
 }
 
 export interface IProfile {

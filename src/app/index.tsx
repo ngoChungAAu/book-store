@@ -32,37 +32,50 @@ import { useDispatch, useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useCartSlice } from './pages/CartPage/slice';
 import { selectCart } from './pages/CartPage/slice/selector';
+import { selectGlobal } from './components/GlobalState/selector';
 
 export function App() {
   const { i18n } = useTranslation();
 
   const dispatch = useDispatch();
 
+  const accessToken = localStorage.getItem('access_token');
+
   const { actions } = useGlobalSlice();
 
   const { actions: cartActions } = useCartSlice();
 
-  const { addStatus, removeStatus } = useSelector(selectCart);
+  const { user } = useSelector(selectGlobal);
+
+  const { addStatus, removeStatus, paymentStatus } = useSelector(selectCart);
 
   React.useEffect(() => {
-    if (localStorage.getItem('access_token')) {
-      dispatch(actions.getUserProfileRequest());
-
+    if (user !== null) {
       dispatch(cartActions.getCurrentCart());
+    }
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  React.useEffect(() => {
+    if (accessToken !== null) {
+      dispatch(actions.getUserProfileRequest());
     }
 
     dispatch(actions.getCategoryListRequest({ page: '', size: '' }));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
-    if (!localStorage.getItem('access_token')) {
+    if (accessToken === null) {
       return;
     }
 
-    if (addStatus === 'success' || removeStatus === 'success') {
+    if (
+      addStatus === 'success' ||
+      removeStatus === 'success' ||
+      paymentStatus === 'success'
+    ) {
       dispatch(cartActions.getCurrentCart());
     }
-  }, [addStatus, removeStatus]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [addStatus, removeStatus, paymentStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <BrowserRouter>

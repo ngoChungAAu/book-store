@@ -42,7 +42,7 @@ export function App() {
 
   const { actions: cartActions } = useCartSlice();
 
-  const { addStatus, removeStatus } = useSelector(selectCart);
+  const { addStatus, removeStatus, paymentStatus } = useSelector(selectCart);
 
   React.useEffect(() => {
     if (localStorage.getItem('access_token')) {
@@ -59,10 +59,14 @@ export function App() {
       return;
     }
 
-    if (addStatus === 'success' || removeStatus === 'success') {
+    if (
+      addStatus === 'success' ||
+      removeStatus === 'success' ||
+      paymentStatus === 'success'
+    ) {
       dispatch(cartActions.getCurrentCart());
     }
-  }, [addStatus, removeStatus]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [addStatus, removeStatus, paymentStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <BrowserRouter>

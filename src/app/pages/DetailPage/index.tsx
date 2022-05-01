@@ -140,11 +140,7 @@ export function DetailPage() {
                     </Typography>
                     <Typography component="p">
                       <FiberManualRecordIcon />
-                      Số lượng:{' '}
-                      <span>
-                        {product.detail.currentNumber -
-                          product.detail.quantitySelled}
-                      </span>
+                      Số lượng: <span>{product.detail.currentNumber}</span>
                     </Typography>
                   </Grid>
                   <Grid item md={6} className="right">

@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useCartSlice } from './pages/CartPage/slice';
 import { selectCart } from './pages/CartPage/slice/selector';
+import { selectGlobal } from './components/GlobalState/selector';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -42,20 +43,26 @@ export function App() {
 
   const { actions: cartActions } = useCartSlice();
 
+  const { user } = useSelector(selectGlobal);
+
   const { addStatus, removeStatus, paymentStatus } = useSelector(selectCart);
 
   React.useEffect(() => {
-    if (localStorage.getItem('access_token')) {
-      dispatch(actions.getUserProfileRequest());
-
+    if (user !== null) {
       dispatch(cartActions.getCurrentCart());
+    }
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  React.useEffect(() => {
+    if (localStorage.getItem('access_token') !== null) {
+      dispatch(actions.getUserProfileRequest());
     }
 
     dispatch(actions.getCategoryListRequest({ page: '', size: '' }));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
-    if (!localStorage.getItem('access_token')) {
+    if (localStorage.getItem('access_token') === null) {
       return;
     }
 

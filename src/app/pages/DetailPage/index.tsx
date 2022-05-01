@@ -91,9 +91,10 @@ export function DetailPage() {
             </BreadcumbItem>{' '}
             /{' '}
             <BreadcumbItem
-              onClick={() =>
-                history.push(`/product-list/${product.detail.categoryId}`)
-              }
+              onClick={() => {
+                dispatch(globalActions.setProductPage(1));
+                history.push(`/product-list/${product.detail.categoryId}`);
+              }}
             >
               {product.detail.category}
             </BreadcumbItem>{' '}

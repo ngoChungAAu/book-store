@@ -1,14 +1,15 @@
-import { Box, IconButton, Menu } from '@mui/material';
+import { Box, IconButton, Menu, Typography } from '@mui/material';
 import { useState } from 'react';
-import BackgroundMenu from '../../assets/BackgroundMenu.svg';
+import UserIMG from '../../assets/User.svg';
 import UserProfile from '../../assets/UserProfile.svg';
 import History from '../../assets/History.svg';
 import Logout from '../../assets/Logout.svg';
 import { useHistory } from 'react-router-dom';
 import { styled } from '@mui/system';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalSlice } from 'app/components/GlobalState';
 import { useCartSlice } from 'app/pages/CartPage/slice';
+import { selectGlobal } from 'app/components/GlobalState/selector';
 
 export default function UserMenu() {
   const history = useHistory();
@@ -18,6 +19,8 @@ export default function UserMenu() {
   const { actions } = useGlobalSlice();
 
   const { actions: cartActions } = useCartSlice();
+
+  const { user } = useSelector(selectGlobal);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -38,23 +41,33 @@ export default function UserMenu() {
 
   return (
     <>
-      <IconButton
+      <Box
         onClick={handleClick}
-        size="small"
         sx={{
-          backgroundImage: `url(${BackgroundMenu})`,
-          height: '32px',
-          width: '32px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
           cursor: 'pointer',
         }}
-      />
+      >
+        <IconButton
+          size="small"
+          sx={{
+            height: '32px',
+            width: '32px',
+            backgroundImage: `url(${UserIMG})`,
+            backgroundSize: 'cover',
+          }}
+        />
+        <Typography component="p">{user?.username}</Typography>
+      </Box>
       <Menu
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         PaperProps={{
           sx: {
-            mt: '10px',
+            mt: '5px',
             width: '220px',
             borderRadius: '16px 0px 16px 16px',
             backgroundColor: theme => theme.palette.white.main,

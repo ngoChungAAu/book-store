@@ -50,6 +50,7 @@ const FeatureItem = styled(Grid)(({ theme }) => ({
   '& > svg': {
     height: '64px',
     width: '64px',
+    color: theme.palette.secondary.main,
   },
 
   '& > h3': {
@@ -57,6 +58,7 @@ const FeatureItem = styled(Grid)(({ theme }) => ({
     fontSize: '28px',
     lineHeight: '32px',
     fontWeight: 'bold',
+    color: theme.palette.secondary.main,
   },
 
   '& > p': {

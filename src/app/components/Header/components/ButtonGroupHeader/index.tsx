@@ -71,7 +71,9 @@ export default function ButtonGroupHeader() {
         <>
           <IconButton onClick={handleCart}>
             <Badge badgeContent={detailCart.total} color="primary">
-              <ShoppingCartIcon sx={{ color: '#000' }} />
+              <ShoppingCartIcon
+                sx={{ color: '#000', width: '32px', height: '32px' }}
+              />
             </Badge>
           </IconButton>
           <UserMenu />

@@ -2,11 +2,13 @@ import { Box, IconButton, Menu } from '@mui/material';
 import { useState } from 'react';
 import BackgroundMenu from '../../assets/BackgroundMenu.svg';
 import UserProfile from '../../assets/UserProfile.svg';
+import History from '../../assets/History.svg';
 import Logout from '../../assets/Logout.svg';
 import { useHistory } from 'react-router-dom';
 import { styled } from '@mui/system';
 import { useDispatch } from 'react-redux';
 import { useGlobalSlice } from 'app/components/GlobalState';
+import { useCartSlice } from 'app/pages/CartPage/slice';
 
 export default function UserMenu() {
   const history = useHistory();
@@ -14,6 +16,8 @@ export default function UserMenu() {
   const dispatch = useDispatch();
 
   const { actions } = useGlobalSlice();
+
+  const { actions: cartActions } = useCartSlice();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -68,6 +72,16 @@ export default function UserMenu() {
         <MenuUserItemStyle onClick={() => history.push('/profile')}>
           <img src={UserProfile} alt="User Profile" />
           <Box>Tài khoản</Box>
+        </MenuUserItemStyle>
+
+        <MenuUserItemStyle
+          onClick={() => {
+            dispatch(cartActions.setPage(1));
+            history.push('/cart-list');
+          }}
+        >
+          <img src={History} alt="History" />
+          <Box>Lịch sử đặt hàng</Box>
         </MenuUserItemStyle>
 
         <MenuUserItemStyle onClick={handleLogout}>

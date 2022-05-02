@@ -26,6 +26,7 @@ import { ListPage } from 'app/pages/ListPage/Loadable';
 import { DetailPage } from 'app/pages/DetailPage/Loadable';
 import { CartPage } from 'app/pages/CartPage/Loadable';
 import { BuyPage } from 'app/pages/BuyPage/Loadable';
+import { CartHistoryPage } from './pages/CartHistoryPage/Loadable';
 import PublicRoute from 'app/components/PublicRoute';
 import { useGlobalSlice } from 'app/components/GlobalState';
 import { useDispatch, useSelector } from 'react-redux';
@@ -94,8 +95,9 @@ export function App() {
           <Route exact path="/search" component={SearchPage} />
           <Route exact path="/product-list/:id" component={ListPage} />
           <Route exact path="/product-detail/:id" component={DetailPage} />
-          <ProtectedRoute exact path="/cart" component={CartPage} />
+          <ProtectedRoute exact path="/cart-current" component={CartPage} />
           <ProtectedRoute exact path="/buy" component={BuyPage} />
+          <ProtectedRoute exact path="/cart-list" component={CartHistoryPage} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

@@ -24,7 +24,7 @@ export default function ButtonGroupHeader() {
     history.push('/login');
   };
   const handleRegister = () => history.push('/register');
-  const handleCart = () => history.push('/cart');
+  const handleCart = () => history.push('/cart-current');
 
   return (
     <Box

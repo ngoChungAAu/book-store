@@ -109,8 +109,11 @@ export function DetailPage() {
               <ImageBox>
                 <img
                   src={
-                    !_.isEmpty(product.detail.images[0])
-                      ? product.detail.images[0].link
+                    !_.isEmpty(
+                      product.detail.images[product.detail.images.length - 1],
+                    )
+                      ? product.detail.images[product.detail.images.length - 1]
+                          .link
                       : ''
                   }
                   alt={product.detail.title}
